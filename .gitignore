@@ -1,0 +1,26 @@
+*.iml
+*.iws
+*.ipr
+.idea/
+.gradle/
+local.properties
+
+*/build/
+secret.gradle
+proguard.map
+
+*~
+*.swp
+.DS_Store
+build
+
+# keystore
+signing.gradle
+cookpad-release-key.keystore
+
+# Crashlytics
+com_crashlytics_export_strings.xml
+crashlytics-build.properties
+crashlytics.properties
+
+Rakefile
