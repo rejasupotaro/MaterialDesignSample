@@ -12,6 +12,6 @@
     <dimen name="text_size_xsmall">14sp</dimen>
     <dimen name="text_size_xxsmall">12sp</dimen>
 
-    <dimen name="item_list_header_height">180dp</dimen>
+    <dimen name="item_list_header_height">240dp</dimen>
     <dimen name="view_pager_tab_height">48dp</dimen>
 </resources>
