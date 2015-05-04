@@ -13,4 +13,7 @@
     <color name="primary_dark">@color/blue</color>
     <color name="statusBarColor">@color/blue</color>
     <color name="navigationBarColor">@android:color/black</color>
+
+    <color name="pressed_color_ripple">#55000000</color>
+    <color name="tab_title">@android:color/white</color>
 </resources>

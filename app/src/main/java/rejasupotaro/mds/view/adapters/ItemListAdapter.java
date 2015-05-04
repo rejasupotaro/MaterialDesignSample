@@ -8,11 +8,11 @@ import java.util.List;
 
 import rejasupotaro.mds.view.holders.ItemViewHolder;
 
-public class ListAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     private List<Object> items;
 
-    public ListAdapter() {
+    public ItemListAdapter() {
         this.items = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             items.add(new Object());
