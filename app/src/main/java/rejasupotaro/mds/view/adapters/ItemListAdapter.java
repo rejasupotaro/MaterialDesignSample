@@ -8,8 +8,7 @@ import java.util.List;
 
 import rejasupotaro.mds.view.holders.ItemViewHolder;
 
-public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> {
-
+public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Object> items;
 
     public ItemListAdapter() {
@@ -20,17 +19,19 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemCount() {
+        return items.size();
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return ItemViewHolder.create(parent);
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.bind(items, position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ItemViewHolder) {
+            ((ItemViewHolder) holder).bind(items, position);
+        }
     }
 }

@@ -1,0 +1,5 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_list_header_height"
+    android:background="@color/blue"
+    android:orientation="vertical"/>

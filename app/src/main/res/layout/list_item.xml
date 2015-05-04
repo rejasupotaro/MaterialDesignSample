@@ -9,10 +9,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/blue"/>
+            android:layout_height="180dp"
+            android:src="@drawable/pasta"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/title"

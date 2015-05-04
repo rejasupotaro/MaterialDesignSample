@@ -2,36 +2,41 @@ package rejasupotaro.mds.view.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class TabFragmentPagerAdapter extends CacheFragmentStatePagerAdapter {
 
-    private List<TabFragment> tabFragments = new ArrayList<>();
+    private List<TabFragment> pages = new ArrayList<>();
 
     public TabFragmentPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
     public void add(TabFragment tabFragment) {
-        tabFragments.add(tabFragment);
+        pages.add(tabFragment);
+    }
+
+    public Fragment getItemAt(int position) {
+        return pages.get(position).fragment;
     }
 
     @Override
-    public Fragment getItem(int position) {
-        return tabFragments.get(position).fragment;
+    protected Fragment createItem(int position) {
+        return pages.get(position).fragment;
     }
 
     @Override
     public int getCount() {
-        return tabFragments.size();
+        return pages.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabFragments.get(position).title;
+        return pages.get(position).title;
     }
 
     public static class TabFragment {

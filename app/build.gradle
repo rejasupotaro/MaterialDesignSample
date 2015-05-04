@@ -39,6 +39,7 @@ dependencies {
 
     compile 'com.google.dagger:dagger:2.0'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.5.1'
 
     apt 'com.google.dagger:dagger-compiler:2.0'
 

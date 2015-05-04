@@ -5,7 +5,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
 
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
