@@ -2,44 +2,35 @@ package rejasupotaro.mds.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.widget.FrameLayout;
 
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.github.ksoichiro.android.observablescrollview.Scrollable;
-import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
+import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.view.adapters.TabFragmentPagerAdapter;
 import rejasupotaro.mds.view.components.SlidingTabLayout;
 import rejasupotaro.mds.view.fragments.ItemListFragment;
 
-public class MainActivity extends BaseActivity {
-
-    @InjectView(R.id.container)
-    TouchInterceptionFrameLayout interceptionLayout;
-
-    @InjectView(R.id.view_pager_wrapper)
-    View viewPagerWrapper;
+public class MainActivity extends BaseActivity implements ObservableScrollViewCallbacks {
 
     @InjectView(R.id.view_pager)
     ViewPager viewPager;
 
+    @InjectView(R.id.tab_container)
+    View tabContainer;
+
     @InjectView(R.id.sliding_tab_layout)
     SlidingTabLayout slidingTabLayout;
-
-    private TabFragmentPagerAdapter pagerAdapter;
-    private int slop;
-    private int itemListHeaderHeight;
-    private int viewPagerTabHeight;
-    private boolean isScrolled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +42,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -67,105 +57,90 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupViewPager() {
-        itemListHeaderHeight = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
-        viewPagerTabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
-
-        viewPagerWrapper.setPadding(0, itemListHeaderHeight, 0, 0);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) slidingTabLayout.getLayoutParams();
-        params.topMargin = itemListHeaderHeight - viewPagerTabHeight;
-
-        ItemListFragment itemListFragment1 = new ItemListFragment();
-        ItemListFragment itemListFragment2 = new ItemListFragment();
-        pagerAdapter = new TabFragmentPagerAdapter.Builder(getSupportFragmentManager())
-                .add(new TabFragmentPagerAdapter.TabFragment("Channel1", itemListFragment1))
-                .add(new TabFragmentPagerAdapter.TabFragment("Channel2", itemListFragment2))
-                .build();
+        TabFragmentPagerAdapter pagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.add(new Tab("Channel1", new ItemListFragment()));
+        pagerAdapter.add(new Tab("Channel2", new ItemListFragment()));
         viewPager.setAdapter(pagerAdapter);
+
+        slidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                int scrollY = (int) (tabContainer.getTranslationY());
+                pagerAdapter.getItemAt(position).adjustScroll(scrollY);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
         slidingTabLayout.setDistributeEvenly(false);
         slidingTabLayout.setViewPager(viewPager);
-
-        ViewConfiguration viewConfiguration = ViewConfiguration.get(this);
-        slop = viewConfiguration.getScaledTouchSlop();
-
-        interceptionLayout.setScrollInterceptionListener(interceptionListener);
     }
 
-    private TouchInterceptionFrameLayout.TouchInterceptionListener interceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
-        @Override
-        public boolean shouldInterceptTouchEvent(MotionEvent motionEvent, boolean isMoving, float diffX, float diffY) {
-            if (!isScrolled && slop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
-                return false;
-            }
+    @Override
+    public void onScrollChanged(int scrollY, boolean isFirstScroll, boolean isDragging) {
+        int height = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
+        int size = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
+        tabContainer.setTranslationY(Math.min(Math.max(-scrollY, -height + size), size));
+    }
 
-            Scrollable scrollable = getCurrentScrollable();
-            if (scrollable == null) {
-                isScrolled = false;
-                return false;
-            }
+    @Override
+    public void onDownMotionEvent() {
 
-            int flexibleSpace = itemListHeaderHeight - viewPagerTabHeight;
-            int translationY = (int) interceptionLayout.getTranslationY();
-            boolean scrollingUp = 0 < diffY;
-            boolean scrollingDown = diffY < 0;
-            if (scrollingUp) {
-                if (translationY < 0) {
-                    isScrolled = true;
-                    return true;
-                }
-            } else if (scrollingDown) {
-                if (-flexibleSpace < translationY) {
-                    isScrolled = true;
-                    return true;
-                }
-            }
-            isScrolled = false;
-            return false;
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+
+    }
+
+    public class TabFragmentPagerAdapter extends CacheFragmentStatePagerAdapter {
+
+        private List<Tab> pages = new ArrayList<>();
+
+        public TabFragmentPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        public void add(Tab tab) {
+            pages.add(tab);
+        }
+
+        public ItemListFragment getItemAt(int position) {
+            return pages.get(position).fragment;
         }
 
         @Override
-        public void onDownMotionEvent(MotionEvent motionEvent) {
-
+        protected Fragment createItem(int position) {
+            ItemListFragment fragment = pages.get(position).fragment;
+            fragment.setOnScrollCallback(MainActivity.this);
+            return fragment;
         }
 
         @Override
-        public void onMoveMotionEvent(MotionEvent motionEvent, float diffX, float diffY) {
-            int flexibleSpace = itemListHeaderHeight - viewPagerTabHeight;
-            float translationY = ScrollUtils.getFloat(interceptionLayout.getTranslationY() + diffY, -flexibleSpace, 0);
-            updateFlexibleSpace(translationY);
-            if (translationY < 0) {
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) interceptionLayout.getLayoutParams();
-                lp.height = (int) (-translationY + getScreenHeight());
-                interceptionLayout.requestLayout();
-            }
+        public int getCount() {
+            return pages.size();
         }
 
         @Override
-        public void onUpOrCancelMotionEvent(MotionEvent motionEvent) {
-
+        public CharSequence getPageTitle(int position) {
+            return pages.get(position).title;
         }
-    };
-
-    private Scrollable getCurrentScrollable() {
-        Fragment fragment = getCurrentFragment();
-        if (fragment == null) {
-            return null;
-        }
-        View view = fragment.getView();
-        if (view == null) {
-            return null;
-        }
-        return (Scrollable) view.findViewById(R.id.item_list);
     }
 
-    private Fragment getCurrentFragment() {
-        return pagerAdapter.getItemAt(viewPager.getCurrentItem());
-    }
+    public class Tab {
 
-    private void updateFlexibleSpace(float translationY) {
-        interceptionLayout.setTranslationY(translationY);
-    }
+        private String title;
 
-    protected int getScreenHeight() {
-        return findViewById(android.R.id.content).getHeight();
+        private ItemListFragment fragment;
+
+        public Tab(String title, ItemListFragment fragment) {
+            this.title = title;
+            this.fragment = fragment;
+        }
     }
 }

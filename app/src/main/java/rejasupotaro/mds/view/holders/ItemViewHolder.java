@@ -35,13 +35,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(List<Object> items, int position) {
         textView.setText("position: " + position);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ItemDetailActivity.launch((Activity) itemView.getContext(), itemImageView, "");
-            }
-        });
+        itemView.setOnClickListener(view -> ItemDetailActivity.launch((Activity) itemView.getContext(), itemImageView, ""));
     }
 }
 

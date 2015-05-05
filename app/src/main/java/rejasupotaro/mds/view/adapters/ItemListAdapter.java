@@ -6,9 +6,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import rejasupotaro.mds.view.holders.HeaderViewHolder;
 import rejasupotaro.mds.view.holders.ItemViewHolder;
 
 public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int VIEW_TYPE_HEADER = 0;
+    private static final int VIEW_TYPE_ITEM = 1;
+
     private List<Object> items;
 
     public ItemListAdapter() {
@@ -19,13 +23,26 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return VIEW_TYPE_HEADER;
+        } else {
+            return VIEW_TYPE_ITEM;
+        }
+    }
+
+    @Override
     public int getItemCount() {
-        return items.size();
+        return items.size() + 1;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ItemViewHolder.create(parent);
+        if (viewType == VIEW_TYPE_HEADER) {
+            return HeaderViewHolder.create(parent);
+        } else {
+            return ItemViewHolder.create(parent);
+        }
     }
 
     @Override
