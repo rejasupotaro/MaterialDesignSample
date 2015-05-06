@@ -148,8 +148,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
 
         pagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.add(new Tab("Channel1", new ItemListFragment()));
-        pagerAdapter.add(new Tab("Channel2", new ItemListFragment()));
+        pagerAdapter.add(new Tab("Channel 1", new ItemListFragment()));
+        pagerAdapter.add(new Tab("Channel 2", new ItemListFragment()));
         viewPager.setAdapter(pagerAdapter);
 
         viewPagerWrapper.setPadding(0, flexibleSpaceHeight, 0, 0);
@@ -202,11 +202,15 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         interceptionLayout.setTranslationY(translationY);
 
         editText.setTranslationY(translationY);
-        if ((DisplayUtils.dpToPx(this, 110) + translationY) < 0) {
-            editText.setTranslationY(0 - (DisplayUtils.dpToPx(this, 110)));
+        if ((DisplayUtils.dpToPx(this, 102) + translationY) < 0) {
+            editText.setTranslationY(0 - (DisplayUtils.dpToPx(this, 102)));
         } else {
             editText.setTranslationY(translationY);
         }
+
+        float ratio = Math.max(0, DisplayUtils.dpToPx(this, 102) + translationY) / DisplayUtils.dpToPx(this, 110) / 0.3f;
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) editText.getLayoutParams();
+        layoutParams.width = (int) (710 * Math.max(Math.min(ratio, 1), 0.9));
     }
 
     private Fragment getCurrentFragment() {
