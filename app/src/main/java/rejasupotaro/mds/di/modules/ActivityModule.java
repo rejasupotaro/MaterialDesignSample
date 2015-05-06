@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import dagger.Module;
 import dagger.Provides;
-import rejasupotaro.mds.di.PerActivity;
+import rejasupotaro.mds.di.ActivityScope;
 
 @Module
 public class ActivityModule {
@@ -16,7 +16,7 @@ public class ActivityModule {
     }
 
     @Provides
-    @PerActivity
+    @ActivityScope
     Activity activity() {
         return this.activity;
     }
