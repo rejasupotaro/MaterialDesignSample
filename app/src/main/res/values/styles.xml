@@ -1,10 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light"></style>
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat"></style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:windowBackground">@color/base</item>
 
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
@@ -12,20 +13,19 @@
 
         <!-- Toolbar Theme / Apply white arrow -->
         <item name="colorControlNormal">@android:color/white</item>
-        <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
 
         <!-- Material Theme -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
 
-        <item name="android:statusBarColor" tools:targetApi="21">@color/statusBarColor</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/navigationBarColor
+        <item name="android:statusBarColor" tools:targetApi="21">@color/status_bar</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/navigation_bar
         </item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="21">true</item>
     </style>
 
-    <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@android:color/white</item>
+    <style name="AppTheme.NoStatusBar" parent="@style/AppTheme">
+        <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
     </style>
 </resources>

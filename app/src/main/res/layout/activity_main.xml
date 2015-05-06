@@ -22,7 +22,7 @@
             android:id="@+id/list_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue"
+            android:background="@color/primary"
             android:orientation="vertical">
 
             <TextView
@@ -39,7 +39,7 @@
                 android:id="@+id/sliding_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/blue" />
+                android:background="@color/primary" />
         </FrameLayout>
 
     </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>

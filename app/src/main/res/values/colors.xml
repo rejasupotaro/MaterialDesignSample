@@ -7,12 +7,16 @@
     <color name="red">#F44336</color>
     <color name="cyan">#00BCD4</color>
     <color name="lime">#CDDC39</color>
+    <color name="orange">#FF9800</color>
+    <color name="deep_orange">#F57C00</color>
+    <color name="lightgray">#fafaf5</color>
 
-    <color name="accent">@color/blue</color>
-    <color name="primary">@color/blue</color>
-    <color name="primary_dark">@color/blue</color>
-    <color name="statusBarColor">@color/blue</color>
-    <color name="navigationBarColor">@android:color/black</color>
+    <color name="base">@color/lightgray</color>
+    <color name="accent">@color/orange</color>
+    <color name="primary">@color/orange</color>
+    <color name="primary_dark">@color/deep_orange</color>
+    <color name="status_bar">@color/deep_orange</color>
+    <color name="navigation_bar">@android:color/black</color>
 
     <color name="pressed_color_ripple">#55000000</color>
     <color name="tab_title">@android:color/white</color>

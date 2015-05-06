@@ -162,12 +162,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         ViewConfiguration viewConfiguration = ViewConfiguration.get(this);
         slop = viewConfiguration.getScaledTouchSlop();
         interceptionLayout.setScrollInterceptionListener(mInterceptionListener);
-        ScrollUtils.addOnGlobalLayoutListener(interceptionLayout, new Runnable() {
-            @Override
-            public void run() {
-                updateFlexibleSpace();
-            }
-        });
+        ScrollUtils.addOnGlobalLayoutListener(interceptionLayout, this::updateFlexibleSpace);
     }
 
     @Override
