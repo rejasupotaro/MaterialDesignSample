@@ -3,20 +3,22 @@ package rejasupotaro.mds.view.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import rejasupotaro.mds.data.model.Channel;
+import java.util.List;
+
+import rejasupotaro.mds.data.model.Recipe;
 import rejasupotaro.mds.view.holders.RecipeItemViewHolder;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Channel channel;
+    private List<Recipe> recipes;
 
-    public RecipeListAdapter() {
-        this.channel = Channel.dummy();
+    public RecipeListAdapter(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     @Override
     public int getItemCount() {
-        return channel.recipes().size();
+        return recipes.size();
     }
 
     @Override
@@ -26,6 +28,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((RecipeItemViewHolder) holder).bind(channel.recipes().get(position));
+        ((RecipeItemViewHolder) holder).bind(recipes.get(position));
     }
 }

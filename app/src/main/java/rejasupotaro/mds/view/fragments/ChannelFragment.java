@@ -12,12 +12,31 @@ import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
+import rejasupotaro.mds.data.model.Channel;
 import rejasupotaro.mds.view.adapters.RecipeListAdapter;
 
 public class ChannelFragment extends Fragment {
 
+    private static final String EXTRA_CHANNEL = "_channel";
+
     @InjectView(R.id.item_list)
     ObservableRecyclerView recipeListView;
+
+    private Channel channel;
+
+    public static ChannelFragment newInstance(Channel channel) {
+        ChannelFragment channelFragment = new ChannelFragment();
+        Bundle args = new Bundle();
+        args.putString(EXTRA_CHANNEL, channel.toJson());
+        channelFragment.setArguments(args);
+        return channelFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.channel = Channel.fromJson(getArguments().getString(EXTRA_CHANNEL), Channel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +61,6 @@ public class ChannelFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recipeListView.setLayoutManager(layoutManager);
         recipeListView.setHasFixedSize(true);
-        recipeListView.setAdapter(new RecipeListAdapter());
+        recipeListView.setAdapter(new RecipeListAdapter(channel.recipes()));
     }
 }

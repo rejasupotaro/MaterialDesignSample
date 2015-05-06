@@ -26,30 +26,29 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
+import rejasupotaro.mds.data.ChannelService;
+import rejasupotaro.mds.data.model.Channel;
 import rejasupotaro.mds.utils.DisplayUtils;
 import rejasupotaro.mds.view.components.SlidingTabLayout;
 import rejasupotaro.mds.view.fragments.ChannelFragment;
+import rx.Subscription;
+import rx.android.app.AppObservable;
+import rx.subscriptions.Subscriptions;
 
 public class MainActivity extends BaseActivity implements ObservableScrollViewCallbacks {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
-
     @InjectView(R.id.container)
     TouchInterceptionFrameLayout interceptionLayout;
-
     @InjectView(R.id.list_header)
     View listHeader;
-
     @InjectView(R.id.view_pager_wrapper)
     View viewPagerWrapper;
-
     @InjectView(R.id.view_pager)
     ViewPager viewPager;
-
     @InjectView(R.id.sliding_tab_layout)
     SlidingTabLayout slidingTabLayout;
-
     @InjectView(R.id.query_edit_text)
     EditText queryEditText;
 
@@ -58,6 +57,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     private int flexibleSpaceHeight;
     private int tabHeight;
     private boolean isScrolled;
+
+    private Subscription channelsSubscription = Subscriptions.empty();
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
@@ -119,7 +120,13 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         setupActionBar();
-        setupViewPager();
+        setupViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        channelsSubscription.unsubscribe();
+        super.onDestroy();
     }
 
     @Override
@@ -143,13 +150,19 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         getSupportActionBar().setTitle("");
     }
 
-    private void setupViewPager() {
+    private void setupViews() {
+        channelsSubscription = AppObservable.bindActivity(this, new ChannelService().getList())
+                .subscribe(this::setupViewPager);
+    }
+
+    private void setupViewPager(List<Channel> channels) {
         flexibleSpaceHeight = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
         tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
 
         pagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.add(new Tab("Channel 1", new ChannelFragment()));
-        pagerAdapter.add(new Tab("Channel 2", new ChannelFragment()));
+        for (Channel channel : channels) {
+            pagerAdapter.add(new Tab(channel.name(), ChannelFragment.newInstance(channel)));
+        }
         viewPager.setAdapter(pagerAdapter);
 
         viewPagerWrapper.setPadding(0, flexibleSpaceHeight, 0, 0);

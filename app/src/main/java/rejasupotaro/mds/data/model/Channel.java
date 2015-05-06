@@ -8,11 +8,12 @@ import java.util.List;
 import rejasupotaro.mds.data.AutoGson;
 
 @AutoValue @AutoGson
-public abstract class Channel {
+public abstract class Channel extends Model {
+    public abstract String name();
     public abstract List<Recipe> recipes();
 
     public static Channel dummy() {
-        return new AutoValue_Channel(new ArrayList<Recipe>() {{
+        List<Recipe> recipes = new ArrayList<Recipe>() {{
             add(Recipe.dummy());
             add(Recipe.dummy());
             add(Recipe.dummy());
@@ -23,6 +24,7 @@ public abstract class Channel {
             add(Recipe.dummy());
             add(Recipe.dummy());
             add(Recipe.dummy());
-        }});
+        }};
+        return new AutoValue_Channel("Channel", recipes);
     }
 }

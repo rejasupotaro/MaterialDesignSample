@@ -49,6 +49,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.0.1'
     compile 'com.google.auto.value:auto-value:1.0-rc1'
     compile 'com.google.code.gson:gson:2.3'
+    compile 'io.reactivex:rxandroid:0.24.0'
 
     apt 'com.google.dagger:dagger-compiler:2.0'
 
