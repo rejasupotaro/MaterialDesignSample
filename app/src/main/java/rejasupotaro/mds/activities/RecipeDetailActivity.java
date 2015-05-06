@@ -17,28 +17,37 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
+import rejasupotaro.mds.data.model.Recipe;
 
-public class ItemDetailActivity extends BaseActivity {
+public class RecipeDetailActivity extends BaseActivity {
 
+    public static final String EXTRA_RECIPE = "_recipe";
     public static final String EXTRA_IMAGE = "ItemDetailActivity:image";
 
-    @InjectView(R.id.item_image)
-    ImageView itemImageView;
+    @InjectView(R.id.recipe_image)
+    ImageView recipeImageView;
     @InjectView(R.id.title_wrapper)
     View titleWrapperView;
     @InjectView(R.id.title_text)
     TextView titleTextView;
     @InjectView(R.id.updated_at_text)
     TextView updatedAtTextView;
+    @InjectView(R.id.description_text)
+    TextView descriptionTextView;
     @InjectView(R.id.user_image)
     ImageView userImageView;
+    @InjectView(R.id.user_name_text)
+    TextView userNameTextView;
 
-    public static void launch(Activity activity, View transitionView, String url) {
+    private Recipe recipe;
+
+    public static void launch(Activity activity, Recipe recipe, View transitionView, String url) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 activity,
                 transitionView,
                 EXTRA_IMAGE);
-        Intent intent = new Intent(activity, ItemDetailActivity.class);
+        Intent intent = new Intent(activity, RecipeDetailActivity.class);
+        intent.putExtra(EXTRA_RECIPE, recipe.toJson());
         intent.putExtra(EXTRA_IMAGE, url);
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
@@ -48,13 +57,19 @@ public class ItemDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         ButterKnife.inject(this);
-        ViewCompat.setTransitionName(itemImageView, EXTRA_IMAGE);
-        itemImageView.setImageResource(R.drawable.pasta);
+        ViewCompat.setTransitionName(recipeImageView, EXTRA_IMAGE);
+        recipeImageView.setImageResource(R.drawable.recipe);
+
+        recipe = Recipe.fromJson(getIntent().getStringExtra(EXTRA_RECIPE), Recipe.class);
+
         setupViews();
     }
 
     private void setupViews() {
-        titleTextView.setText("Title");
+        titleTextView.setText(recipe.title());
+        updatedAtTextView.setText(recipe.updatedAt());
+        descriptionTextView.setText(recipe.description());
+        userNameTextView.setText(recipe.user().name());
 
         Drawable userDrawable = getResources().getDrawable(R.drawable.user);
         userImageView.setImageDrawable(userDrawable);

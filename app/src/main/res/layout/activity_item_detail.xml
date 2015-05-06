@@ -8,7 +8,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/item_image"
+            android:id="@+id/recipe_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:scaleType="centerCrop"
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:textSize="42dp"
+                android:textSize="@dimen/text_size_large"
                 android:textStyle="bold" />
 
             <TextView
@@ -35,15 +35,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:text="Updated at 05/06/2015"
                 android:textSize="@dimen/text_size_xsmall" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/description_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/spacing_large"
-            android:text="Super easy, healthy tacos without using packaged taco seasoning. Spice-wise you just need some chili powder and ground cumin!"
             android:textSize="@dimen/text_size_medium" />
 
         <TextView
@@ -76,12 +75,12 @@
                 app:riv_oval="true" />
 
             <TextView
+                android:id="@+id/user_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_toEndOf="@id/user_image"
-                android:text="rejasupotaro"
                 android:textSize="@dimen/text_size_medium" />
         </RelativeLayout>
     </LinearLayout>

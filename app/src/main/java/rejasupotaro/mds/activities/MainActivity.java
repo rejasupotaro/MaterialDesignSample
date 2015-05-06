@@ -28,7 +28,7 @@ import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.utils.DisplayUtils;
 import rejasupotaro.mds.view.components.SlidingTabLayout;
-import rejasupotaro.mds.view.fragments.ItemListFragment;
+import rejasupotaro.mds.view.fragments.ChannelFragment;
 
 public class MainActivity extends BaseActivity implements ObservableScrollViewCallbacks {
 
@@ -50,8 +50,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     @InjectView(R.id.sliding_tab_layout)
     SlidingTabLayout slidingTabLayout;
 
-    @InjectView(R.id.edit_text)
-    EditText editText;
+    @InjectView(R.id.query_edit_text)
+    EditText queryEditText;
 
     private TabFragmentPagerAdapter pagerAdapter;
     private int slop;
@@ -101,8 +101,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
             float translationY = ScrollUtils.getFloat(interceptionLayout.getTranslationY() + diffY, -flexibleSpace, 0);
             updateFlexibleSpace(translationY);
             if (translationY < 0) {
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) interceptionLayout.getLayoutParams();
-                lp.height = (int) (-translationY + findViewById(android.R.id.content).getHeight());
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) interceptionLayout.getLayoutParams();
+                layoutParams.height = (int) (-translationY + findViewById(android.R.id.content).getHeight());
                 interceptionLayout.requestLayout();
             }
         }
@@ -148,8 +148,8 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
 
         pagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.add(new Tab("Channel 1", new ItemListFragment()));
-        pagerAdapter.add(new Tab("Channel 2", new ItemListFragment()));
+        pagerAdapter.add(new Tab("Channel 1", new ChannelFragment()));
+        pagerAdapter.add(new Tab("Channel 2", new ChannelFragment()));
         viewPager.setAdapter(pagerAdapter);
 
         viewPagerWrapper.setPadding(0, flexibleSpaceHeight, 0, 0);
@@ -196,15 +196,15 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     private void updateFlexibleSpace(float translationY) {
         interceptionLayout.setTranslationY(translationY);
 
-        editText.setTranslationY(translationY);
+        queryEditText.setTranslationY(translationY);
         if ((DisplayUtils.dpToPx(this, 102) + translationY) < 0) {
-            editText.setTranslationY(0 - (DisplayUtils.dpToPx(this, 102)));
+            queryEditText.setTranslationY(0 - (DisplayUtils.dpToPx(this, 102)));
         } else {
-            editText.setTranslationY(translationY);
+            queryEditText.setTranslationY(translationY);
         }
 
         float ratio = Math.max(0, DisplayUtils.dpToPx(this, 102) + translationY) / DisplayUtils.dpToPx(this, 110) / 0.3f;
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) editText.getLayoutParams();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) queryEditText.getLayoutParams();
         layoutParams.width = (int) (710 * Math.max(Math.min(ratio, 1), 0.9));
     }
 
@@ -224,7 +224,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
             pages.add(tab);
         }
 
-        public ItemListFragment getItemAt(int position) {
+        public ChannelFragment getItemAt(int position) {
             return pages.get(position).fragment;
         }
 
@@ -248,9 +248,9 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
 
         private String title;
 
-        private ItemListFragment fragment;
+        private ChannelFragment fragment;
 
-        public Tab(String title, ItemListFragment fragment) {
+        public Tab(String title, ChannelFragment fragment) {
             this.title = title;
             this.fragment = fragment;
         }

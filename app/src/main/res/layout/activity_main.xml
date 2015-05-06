@@ -53,13 +53,12 @@
         android:minHeight="?attr/actionBarSize" />
 
     <EditText
-        android:id="@+id/edit_text"
+        android:id="@+id/query_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_large"
         android:layout_marginRight="@dimen/spacing_large"
         android:layout_marginTop="110dp"
         android:background="@android:color/white"
-        android:padding="@dimen/spacing_medium"
-        android:textColor="@android:color/black" />
+        android:padding="@dimen/spacing_medium" />
 </FrameLayout>
