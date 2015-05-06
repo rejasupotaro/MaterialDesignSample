@@ -1,56 +1,37 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/container"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-        <FrameLayout
-            android:id="@+id/view_pager_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/list_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_list_header_height"
+        android:background="@color/primary"
+        android:orientation="vertical">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/list_header"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/primary"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:text="@string/i_am_an_android"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="60dp"
-                android:text="@string/i_am_an_android"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold" />
-
-            <rejasupotaro.mds.view.components.SlidingTabLayout
-                android:id="@+id/sliding_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary" />
-        </FrameLayout>
-
-    </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:minHeight="?attr/actionBarSize" />
+        <rejasupotaro.mds.view.components.PagerSlidingTabStrip
+            android:id="@+id/sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_gravity="bottom"/>
+    </FrameLayout>
 
     <EditText
         android:id="@+id/query_edit_text"
@@ -61,4 +42,11 @@
         android:layout_marginTop="110dp"
         android:background="@android:color/white"
         android:padding="@dimen/spacing_medium" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize" />
 </FrameLayout>

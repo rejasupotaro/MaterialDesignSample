@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_medium"
+    android:layout_marginBottom="@dimen/spacing_medium"
+    android:layout_marginStart="@dimen/spacing_large"
+    android:layout_marginEnd="@dimen/spacing_large"
+    android:background="@drawable/bg_step"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_large">
+
+    <TextView
+        android:id="@+id/step_description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_small" />
+</LinearLayout>

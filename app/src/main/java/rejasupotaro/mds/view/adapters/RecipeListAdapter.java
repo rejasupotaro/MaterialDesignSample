@@ -1,33 +1,61 @@
 package rejasupotaro.mds.view.adapters;
 
-import android.support.v7.widget.RecyclerView;
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import rejasupotaro.mds.R;
+import rejasupotaro.mds.activities.RecipeDetailActivity;
 import rejasupotaro.mds.data.model.Recipe;
-import rejasupotaro.mds.view.holders.RecipeItemViewHolder;
 
-public class RecipeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecipeListAdapter extends BindableAdapter<Recipe> {
+    public RecipeListAdapter(Context context, List<Recipe> recipes) {
+        super(context, recipes);
+    }
 
-    private List<Recipe> recipes;
+    static class ViewHolder {
+        @InjectView(R.id.recipe_image)
+        ImageView recipeImageView;
+        @InjectView(R.id.user_image)
+        ImageView userImageView;
+        @InjectView(R.id.user_name_text)
+        TextView userNameTextView;
+        @InjectView(R.id.title_text)
+        TextView titleTextView;
 
-    public RecipeListAdapter(List<Recipe> recipes) {
-        this.recipes = recipes;
+        ViewHolder(View view) {
+            ButterKnife.inject(this, view);
+        }
     }
 
     @Override
-    public int getItemCount() {
-        return recipes.size();
+    public View newView(LayoutInflater inflater, int position, ViewGroup container) {
+        View view = inflater.inflate(R.layout.list_item_recipe, container, false);
+        ViewHolder holder = new ViewHolder(view);
+        view.setTag(holder);
+        return view;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return RecipeItemViewHolder.create(parent);
-    }
+    public void bindView(Recipe recipe, int position, View view) {
+        final ViewHolder holder = (ViewHolder) view.getTag();
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((RecipeItemViewHolder) holder).bind(recipes.get(position));
+        holder.recipeImageView.setImageResource(R.drawable.recipe);
+        holder.userImageView.setImageResource(R.drawable.user);
+        holder.userNameTextView.setText(recipe.user().name());
+        holder.titleTextView.setText(recipe.title());
+
+        view.setOnClickListener(v -> {
+            Activity activity = (Activity) v.getContext();
+            RecipeDetailActivity.launch(activity, recipe, holder.recipeImageView, "");
+        });
     }
 }

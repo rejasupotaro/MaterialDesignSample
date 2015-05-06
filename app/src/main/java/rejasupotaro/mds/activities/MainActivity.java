@@ -1,24 +1,21 @@
 package rejasupotaro.mds.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-
-import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.github.ksoichiro.android.observablescrollview.Scrollable;
-import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,90 +26,35 @@ import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.ChannelService;
 import rejasupotaro.mds.data.model.Channel;
 import rejasupotaro.mds.utils.DisplayUtils;
-import rejasupotaro.mds.view.components.SlidingTabLayout;
+import rejasupotaro.mds.view.components.PagerSlidingTabStrip;
 import rejasupotaro.mds.view.fragments.ChannelFragment;
+import rejasupotaro.mds.view.fragments.ScrollTabHolderFragment;
+import rejasupotaro.mds.view.listeners.ScrollTabHolder;
 import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.subscriptions.Subscriptions;
 
-public class MainActivity extends BaseActivity implements ObservableScrollViewCallbacks {
+public class MainActivity extends BaseActivity {
+
+    private static AccelerateInterpolator INTERPOLATOR = new AccelerateInterpolator();
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.container)
-    TouchInterceptionFrameLayout interceptionLayout;
     @InjectView(R.id.list_header)
     View listHeader;
-    @InjectView(R.id.view_pager_wrapper)
-    View viewPagerWrapper;
     @InjectView(R.id.view_pager)
     ViewPager viewPager;
-    @InjectView(R.id.sliding_tab_layout)
-    SlidingTabLayout slidingTabLayout;
+    @InjectView(R.id.sliding_tabs)
+    PagerSlidingTabStrip slidingTabs;
     @InjectView(R.id.query_edit_text)
     EditText queryEditText;
 
     private TabFragmentPagerAdapter pagerAdapter;
-    private int slop;
-    private int flexibleSpaceHeight;
+    private int headerHeight;
     private int tabHeight;
-    private boolean isScrolled;
+    private int minHeaderHeight;
 
     private Subscription channelsSubscription = Subscriptions.empty();
-
-    private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
-        @Override
-        public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
-            if (!isScrolled && slop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
-                return false;
-            }
-
-            Scrollable scrollable = getCurrentScrollable();
-            if (scrollable == null) {
-                isScrolled = false;
-                return false;
-            }
-
-            int flexibleSpace = flexibleSpaceHeight - (tabHeight * 2);
-            int translationY = (int) interceptionLayout.getTranslationY();
-            boolean scrollingUp = 0 < diffY;
-            boolean scrollingDown = diffY < 0;
-            if (scrollingUp) {
-                if (translationY < 0) {
-                    isScrolled = true;
-                    return true;
-                }
-            } else if (scrollingDown) {
-                if (-flexibleSpace < translationY) {
-                    isScrolled = true;
-                    return true;
-                }
-            }
-            isScrolled = false;
-            return false;
-        }
-
-        @Override
-        public void onDownMotionEvent(MotionEvent ev) {
-        }
-
-        @Override
-        public void onMoveMotionEvent(MotionEvent ev, float diffX, float diffY) {
-            int flexibleSpace = flexibleSpaceHeight - tabHeight;
-            float translationY = ScrollUtils.getFloat(interceptionLayout.getTranslationY() + diffY, -flexibleSpace, 0);
-            updateFlexibleSpace(translationY);
-            if (translationY < 0) {
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) interceptionLayout.getLayoutParams();
-                layoutParams.height = (int) (-translationY + findViewById(android.R.id.content).getHeight());
-                interceptionLayout.requestLayout();
-            }
-        }
-
-        @Override
-        public void onUpOrCancelMotionEvent(MotionEvent ev) {
-            isScrolled = false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,94 +98,123 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
     }
 
     private void setupViewPager(List<Channel> channels) {
-        flexibleSpaceHeight = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
+        headerHeight = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
         tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
+        int actionBarHeight = 0;
+        TypedValue typedValue = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
+        }
+        minHeaderHeight = tabHeight + actionBarHeight;
 
         pagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
-        for (Channel channel : channels) {
-            pagerAdapter.add(new Tab(channel.name(), ChannelFragment.newInstance(channel)));
+        for (int i = 0; i < channels.size(); i++) {
+            Channel channel = channels.get(i);
+            pagerAdapter.add(new Tab(channel.name(), ChannelFragment.newInstance(channel, i)));
         }
+        pagerAdapter.setTabHolderScrollingContent(new ScrollTabHolder() {
+            @Override
+            public void adjustScroll(int scrollHeight) {
+                // do nothing
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
+                if (viewPager.getCurrentItem() == pagePosition) {
+                    int scrollY = getScrollY(view);
+                    listHeader.setTranslationY(Math.max(-scrollY, -minHeaderHeight));
+                    updateHeader();
+                }
+            }
+        });
         viewPager.setAdapter(pagerAdapter);
 
-        viewPagerWrapper.setPadding(0, flexibleSpaceHeight, 0, 0);
+        slidingTabs.setIndicatorColor(Color.WHITE);
+        slidingTabs.setViewPager(viewPager);
+        slidingTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // do nothing
+            }
 
-        slidingTabLayout.setDistributeEvenly(false);
-        slidingTabLayout.setViewPager(viewPager);
+            @Override
+            public void onPageSelected(int position) {
+                SparseArray<ScrollTabHolder> scrollTabHolders = pagerAdapter.getScrollTabHolders();
+                ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
+                currentHolder.adjustScroll((int) (listHeader.getHeight() + listHeader.getTranslationY()));
+            }
 
-        ((FrameLayout.LayoutParams) slidingTabLayout.getLayoutParams()).topMargin = flexibleSpaceHeight - tabHeight;
-
-        ViewConfiguration viewConfiguration = ViewConfiguration.get(this);
-        slop = viewConfiguration.getScaledTouchSlop();
-        interceptionLayout.setScrollInterceptionListener(mInterceptionListener);
-        ScrollUtils.addOnGlobalLayoutListener(interceptionLayout, this::updateFlexibleSpace);
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // do nothing
+            }
+        });
     }
 
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-    }
-
-    private Scrollable getCurrentScrollable() {
-        Fragment fragment = getCurrentFragment();
-        if (fragment == null) {
-            return null;
+    public int getScrollY(AbsListView view) {
+        View c = view.getChildAt(0);
+        if (c == null) {
+            return 0;
         }
-        View view = fragment.getView();
-        if (view == null) {
-            return null;
+
+        int firstVisiblePosition = view.getFirstVisiblePosition();
+        int top = c.getTop();
+
+        int headerHeight = 0;
+        if (firstVisiblePosition >= 1) {
+            headerHeight = this.headerHeight;
         }
-        return (Scrollable) view.findViewById(R.id.item_list);
+
+        return -top + firstVisiblePosition * c.getHeight() + headerHeight;
     }
 
-    private void updateFlexibleSpace() {
-        updateFlexibleSpace(interceptionLayout.getTranslationY());
-    }
+    private void updateHeader() {
+        int translationY = (int) listHeader.getTranslationY();
+        float ratio = -translationY / (float) minHeaderHeight;
 
-    private void updateFlexibleSpace(float translationY) {
-        interceptionLayout.setTranslationY(translationY);
-
-        queryEditText.setTranslationY(translationY);
         if ((DisplayUtils.dpToPx(this, 102) + translationY) < 0) {
             queryEditText.setTranslationY(0 - (DisplayUtils.dpToPx(this, 102)));
         } else {
             queryEditText.setTranslationY(translationY);
         }
 
-        float ratio = Math.max(0, DisplayUtils.dpToPx(this, 102) + translationY) / DisplayUtils.dpToPx(this, 110) / 0.3f;
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) queryEditText.getLayoutParams();
-        layoutParams.width = (int) (710 * Math.max(Math.min(ratio, 1), 0.9));
+        int width = (int) (710 - (66 * Math.max(INTERPOLATOR.getInterpolation(ratio), 0)));
+        layoutParams.width = width;
+        queryEditText.requestLayout();
     }
 
-    private Fragment getCurrentFragment() {
-        return pagerAdapter.getItemAt(viewPager.getCurrentItem());
-    }
-
-    public class TabFragmentPagerAdapter extends CacheFragmentStatePagerAdapter {
+    public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
         private List<Tab> pages = new ArrayList<>();
+        private SparseArray<ScrollTabHolder> scrollTabHolders;
+        private ScrollTabHolder scrollTabHolder;
 
         public TabFragmentPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
+            scrollTabHolders = new SparseArray<>();
+        }
+
+        public SparseArray<ScrollTabHolder> getScrollTabHolders() {
+            return scrollTabHolders;
+        }
+
+        public void setTabHolderScrollingContent(ScrollTabHolder scrollTabHolder) {
+            this.scrollTabHolder = scrollTabHolder;
         }
 
         public void add(Tab tab) {
             pages.add(tab);
         }
 
-        public ChannelFragment getItemAt(int position) {
-            return pages.get(position).fragment;
-        }
-
         @Override
-        protected Fragment createItem(int position) {
-            return pages.get(position).fragment;
+        public Fragment getItem(int position) {
+            ScrollTabHolderFragment fragment = pages.get(position).fragment;
+            scrollTabHolders.put(position, fragment);
+            if (scrollTabHolder != null) {
+                fragment.setScrollTabHolder(scrollTabHolder);
+            }
+            return fragment;
         }
 
         @Override

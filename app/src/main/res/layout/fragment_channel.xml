@@ -1,5 +1,5 @@
-<com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_list"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical" />

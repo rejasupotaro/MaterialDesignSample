@@ -18,9 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.model.Recipe;
+import rejasupotaro.mds.view.components.StepListView;
 
 public class RecipeDetailActivity extends BaseActivity {
-
     public static final String EXTRA_RECIPE = "_recipe";
     public static final String EXTRA_IMAGE = "ItemDetailActivity:image";
 
@@ -34,6 +34,8 @@ public class RecipeDetailActivity extends BaseActivity {
     TextView updatedAtTextView;
     @InjectView(R.id.description_text)
     TextView descriptionTextView;
+    @InjectView(R.id.step_list)
+    StepListView stepListView;
     @InjectView(R.id.user_image)
     ImageView userImageView;
     @InjectView(R.id.user_name_text)
@@ -55,7 +57,7 @@ public class RecipeDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_detail);
+        setContentView(R.layout.activity_recipe_detail);
         ButterKnife.inject(this);
         ViewCompat.setTransitionName(recipeImageView, EXTRA_IMAGE);
         recipeImageView.setImageResource(R.drawable.recipe);
@@ -69,6 +71,7 @@ public class RecipeDetailActivity extends BaseActivity {
         titleTextView.setText(recipe.title());
         updatedAtTextView.setText(recipe.updatedAt());
         descriptionTextView.setText(recipe.description());
+        stepListView.setSteps(recipe.steps());
         userNameTextView.setText(recipe.user().name());
 
         Drawable userDrawable = getResources().getDrawable(R.drawable.user);
