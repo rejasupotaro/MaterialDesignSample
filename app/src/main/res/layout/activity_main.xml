@@ -1,24 +1,57 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/tab_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_list_header_height"
-        android:background="@color/blue">
+        <FrameLayout
+            android:id="@+id/view_pager_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <rejasupotaro.mds.view.components.SlidingTabLayout
-            android:id="@+id/sliding_tab_layout"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/list_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/blue" />
-    </FrameLayout>
+            android:background="@color/blue"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp"
+                android:text="@string/i_am_an_android"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold" />
+
+            <rejasupotaro.mds.view.components.SlidingTabLayout
+                android:id="@+id/sliding_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue" />
+        </FrameLayout>
+
+    </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginRight="@dimen/spacing_large"
+        android:layout_marginTop="110dp"
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_medium"
+        android:textColor="@android:color/black" />
 </FrameLayout>

@@ -24,25 +24,25 @@ public class ItemListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_HEADER;
-        } else {
+//        if (position == 0) {
+//            return VIEW_TYPE_HEADER;
+//        } else {
             return VIEW_TYPE_ITEM;
-        }
+//        }
     }
 
     @Override
     public int getItemCount() {
-        return items.size() + 1;
+        return items.size();// + 1;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_HEADER) {
-            return HeaderViewHolder.create(parent);
-        } else {
+//        if (viewType == VIEW_TYPE_HEADER) {
+//            return HeaderViewHolder.create(parent);
+//        } else {
             return ItemViewHolder.create(parent);
-        }
+//        }
     }
 
     @Override

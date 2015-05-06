@@ -22,12 +22,6 @@ public class ItemListFragment extends Fragment {
     @InjectView(R.id.item_list)
     ObservableRecyclerView itemListView;
 
-    private ObservableScrollViewCallbacks callback;
-
-    public void setOnScrollCallback(ObservableScrollViewCallbacks callback) {
-        this.callback = callback;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, null);
@@ -52,36 +46,5 @@ public class ItemListFragment extends Fragment {
         itemListView.setLayoutManager(layoutManager);
         itemListView.setHasFixedSize(true);
         itemListView.setAdapter(new ItemListAdapter());
-        itemListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-            @Override
-            public void onScrollChanged(int i, boolean b, boolean b1) {
-                if (callback != null) {
-                    callback.onScrollChanged(i, b, b1);
-                }
-            }
-
-            @Override
-            public void onDownMotionEvent() {
-                if (callback != null) {
-                    callback.onDownMotionEvent();
-                }
-            }
-
-            @Override
-            public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-                if (callback != null) {
-                    callback.onUpOrCancelMotionEvent(scrollState);
-                }
-            }
-        });
-    }
-
-    public void adjustScroll(int y) {
-        LinearLayoutManager layoutManager = ((LinearLayoutManager) itemListView.getLayoutManager());
-        int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-        if (y == 0 && firstVisiblePosition >= 1) {
-            return;
-        }
-        itemListView.scrollVerticallyTo(y);
     }
 }

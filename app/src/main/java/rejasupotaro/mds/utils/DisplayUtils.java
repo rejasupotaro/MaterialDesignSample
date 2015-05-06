@@ -2,8 +2,14 @@ package rejasupotaro.mds.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 public class DisplayUtils {
+    public static int dpToPx(Context context, float dp) {
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getDisplayMetrics(context));
+        return (int) px;
+    }
+
     public static int getWidthPixels(Context context) {
         if (context == null) {
             return 0;
