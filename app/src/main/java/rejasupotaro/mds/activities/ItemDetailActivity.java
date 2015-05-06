@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,6 +20,10 @@ public class ItemDetailActivity extends BaseActivity {
 
     @InjectView(R.id.item_image)
     ImageView itemImageView;
+    @InjectView(R.id.title_text)
+    TextView titleTextView;
+    @InjectView(R.id.user_image)
+    ImageView userImageView;
 
     public static void launch(Activity activity, View transitionView, String url) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -37,5 +42,11 @@ public class ItemDetailActivity extends BaseActivity {
         ButterKnife.inject(this);
         ViewCompat.setTransitionName(itemImageView, EXTRA_IMAGE);
         itemImageView.setImageResource(R.drawable.pasta);
+        setupViews();
+    }
+
+    private void setupViews() {
+        titleTextView.setText("Title");
+        userImageView.setImageResource(R.drawable.user);
     }
 }

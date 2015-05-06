@@ -5,10 +5,9 @@
     android:layout_margin="@dimen/spacing_medium"
     android:background="@drawable/clickable">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/item_image"
@@ -17,10 +16,35 @@
             android:scaleType="centerCrop"
             android:src="@drawable/pasta" />
 
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/user_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="150dp"
+            android:scaleType="centerCrop"
+            app:riv_border_color="@android:color/white"
+            app:riv_border_width="2dp"
+            app:riv_oval="true" />
+
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/user_name_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
+            android:layout_below="@id/item_image"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_toEndOf="@id/user_image"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_image"
+            android:padding="@dimen/spacing_large"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

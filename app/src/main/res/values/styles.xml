@@ -4,7 +4,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorPrimary">@color/text_color_secondary</item>
         <item name="android:windowBackground">@color/base</item>
 
         <item name="android:windowContentOverlay">@null</item>

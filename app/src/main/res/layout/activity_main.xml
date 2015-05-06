@@ -32,6 +32,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="60dp"
                 android:text="@string/i_am_an_android"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_large"
                 android:textStyle="bold" />
 
@@ -49,8 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:minHeight="?attr/actionBarSize"
-        />
+        android:minHeight="?attr/actionBarSize" />
 
     <EditText
         android:id="@+id/edit_text"

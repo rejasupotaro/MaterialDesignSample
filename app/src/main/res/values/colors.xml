@@ -10,6 +10,10 @@
     <color name="orange">#FF9800</color>
     <color name="deep_orange">#F57C00</color>
     <color name="lightgray">#fafaf5</color>
+    <color name="black">#484432</color>
+    <color name="darkgray">#7b7769</color>
+    <color name="gray">#a3a090</color>
+    <color name="border">#dbdbce</color>
 
     <color name="base">@color/lightgray</color>
     <color name="accent">@color/orange</color>
@@ -17,6 +21,11 @@
     <color name="primary_dark">@color/deep_orange</color>
     <color name="status_bar">@color/deep_orange</color>
     <color name="navigation_bar">@android:color/black</color>
+
+    <color name="text_color_primary">@color/black</color>
+    <color name="text_color_secondary">@color/darkgray</color>
+    <color name="text_color_tertiary">@color/gray</color>
+    <color name="text_color_hint">@color/border</color>
 
     <color name="pressed_color_ripple">#55000000</color>
     <color name="tab_title">@android:color/white</color>

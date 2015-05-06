@@ -19,9 +19,12 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     @InjectView(R.id.item_image)
     ImageView itemImageView;
-
-    @InjectView(R.id.title)
-    TextView textView;
+    @InjectView(R.id.user_image)
+    ImageView userImageView;
+    @InjectView(R.id.user_name_text)
+    TextView userNameTextView;
+    @InjectView(R.id.title_text)
+    TextView titleTextView;
 
     public ItemViewHolder(View itemView) {
         super(itemView);
@@ -34,7 +37,11 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(List<Object> items, int position) {
-        textView.setText("position: " + position);
+        itemImageView.setImageResource(R.drawable.pasta);
+        userImageView.setImageResource(R.drawable.user);
+        userNameTextView.setText("rejasupotaro");
+        titleTextView.setText("Chicken Soft Tacos");
+
         itemView.setOnClickListener(view -> ItemDetailActivity.launch((Activity) itemView.getContext(), itemImageView, ""));
     }
 }
