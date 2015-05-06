@@ -44,6 +44,14 @@
 
     </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize"
+        />
+
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"

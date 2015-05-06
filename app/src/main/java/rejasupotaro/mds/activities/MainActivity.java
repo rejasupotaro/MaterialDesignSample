@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,6 +31,9 @@ import rejasupotaro.mds.view.components.SlidingTabLayout;
 import rejasupotaro.mds.view.fragments.ItemListFragment;
 
 public class MainActivity extends BaseActivity implements ObservableScrollViewCallbacks {
+
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
 
     @InjectView(R.id.container)
     TouchInterceptionFrameLayout interceptionLayout;
@@ -114,6 +118,7 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        setupActionBar();
         setupViewPager();
     }
 
@@ -131,6 +136,11 @@ public class MainActivity extends BaseActivity implements ObservableScrollViewCa
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupActionBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
     }
 
     private void setupViewPager() {
