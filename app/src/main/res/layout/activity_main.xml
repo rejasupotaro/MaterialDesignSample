@@ -26,7 +26,7 @@
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />
 
-        <rejasupotaro.mds.view.components.PagerSlidingTabStrip
+        <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="48dip"

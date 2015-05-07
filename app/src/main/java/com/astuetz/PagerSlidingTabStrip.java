@@ -1,4 +1,4 @@
-package rejasupotaro.mds.view.components;
+package com.astuetz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

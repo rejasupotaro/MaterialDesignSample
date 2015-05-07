@@ -26,7 +26,7 @@ import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.ChannelService;
 import rejasupotaro.mds.data.model.Channel;
 import rejasupotaro.mds.utils.DisplayUtils;
-import rejasupotaro.mds.view.components.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 import rejasupotaro.mds.view.fragments.ChannelFragment;
 import rejasupotaro.mds.view.fragments.ScrollTabHolderFragment;
 import rejasupotaro.mds.view.listeners.ScrollTabHolder;
