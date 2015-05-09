@@ -54,6 +54,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:0.24.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
+
     apt 'com.google.dagger:dagger-compiler:2.0'
 
     provided 'org.glassfish:javax.annotation:10.0-b28'

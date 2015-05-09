@@ -3,6 +3,7 @@ package rejasupotaro.mds;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
 
 import rejasupotaro.mds.di.components.ApplicationComponent;
 import rejasupotaro.mds.di.components.DaggerApplicationComponent;
@@ -15,6 +16,7 @@ public class AndroidApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         initializeInjector();
         initializeStetho();
     }
