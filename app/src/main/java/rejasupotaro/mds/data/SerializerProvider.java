@@ -1,10 +1,11 @@
 package rejasupotaro.mds.data;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SerializerProvider {
-    public static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapterFactory(new AutoValueAdapterFactory())
-            .create();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static ObjectMapper getInstance() {
+        return MAPPER;
+    }
 }

@@ -1,15 +1,14 @@
 package rejasupotaro.mds.data.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import rejasupotaro.mds.data.AutoGson;
-
 @AutoValue
-@AutoGson
 public abstract class Recipe extends Model {
     public static final Recipe dummy0 = new AutoValue_Recipe(
             "Chicken Soft Tacos",
@@ -26,17 +25,33 @@ public abstract class Recipe extends Model {
             "Updated at 06/06/2015",
             User.dummy());
 
+    @JsonProperty("title")
     public abstract String title();
 
+    @JsonProperty("description")
     public abstract String description();
 
+    @JsonProperty("image_url")
     public abstract String imageUrl();
 
+    @JsonProperty("steps")
     public abstract List<Step> steps();
 
+    @JsonProperty("updated_at")
     public abstract String updatedAt();
 
+    @JsonProperty("user")
     public abstract User user();
+
+    @JsonCreator
+    public static Recipe create(@JsonProperty("title") String title,
+                                @JsonProperty("description") String description,
+                                @JsonProperty("image_url") String imageUrl,
+                                @JsonProperty("steps") List<Step> steps,
+                                @JsonProperty("updated_at") String updatedAt,
+                                @JsonProperty("user") User user) {
+        return new AutoValue_Recipe(title, description, imageUrl, steps, updatedAt, user);
+    }
 
     public static Recipe dummy() {
         int index = new Random().nextInt(1);

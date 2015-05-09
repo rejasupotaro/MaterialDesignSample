@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
-            android:text="@string/i_am_an_android"
+            android:text="Prototype"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />

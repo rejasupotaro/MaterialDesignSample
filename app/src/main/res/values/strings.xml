@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">MaterialDesignSample</string>
     <string name="action_settings">Settings</string>
-    <string name="i_am_an_android">I\'m an Android</string>
 </resources>
