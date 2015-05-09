@@ -7,11 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.EditText;
@@ -37,8 +39,6 @@ import rx.subscriptions.Subscriptions;
 
 public class MainActivity extends BaseActivity {
 
-    private static AccelerateInterpolator INTERPOLATOR = new AccelerateInterpolator();
-
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.list_header)
@@ -52,7 +52,6 @@ public class MainActivity extends BaseActivity {
 
     private TabFragmentPagerAdapter pagerAdapter;
     private int headerHeight;
-    private int tabHeight;
     private int minHeaderHeight;
 
     private Subscription channelsSubscription = Subscriptions.empty();
@@ -100,7 +99,7 @@ public class MainActivity extends BaseActivity {
 
     private void setupViewPager(List<Channel> channels) {
         headerHeight = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
-        tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
+        int tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
         int actionBarHeight = 0;
         TypedValue typedValue = new TypedValue();
         if (getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
@@ -123,7 +122,7 @@ public class MainActivity extends BaseActivity {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
                 if (viewPager.getCurrentItem() == pagePosition) {
                     int scrollY = getScrollY(view);
-                    listHeader.setTranslationY(Math.max(-scrollY, -minHeaderHeight));
+                    listHeader.setTranslationY(Math.max(-scrollY, -(headerHeight - minHeaderHeight)));
                     updateHeader();
                 }
             }
@@ -171,18 +170,14 @@ public class MainActivity extends BaseActivity {
 
     private void updateHeader() {
         int translationY = (int) listHeader.getTranslationY();
-        float ratio = -translationY / (float) minHeaderHeight;
+//        float ratio = -translationY / (float) minHeaderHeight;
 
-        if ((DisplayUtils.dpToPx(this, 102) + translationY) < 0) {
-            queryEditText.setTranslationY(0 - (DisplayUtils.dpToPx(this, 102)));
+        int marginQueryEditText = getResources().getDimensionPixelSize(R.dimen.spacing_small);
+        if ((DisplayUtils.dpToPx(this, toolbar.getHeight() - marginQueryEditText) + translationY) < 0) {
+            queryEditText.setTranslationY(0 - (DisplayUtils.dpToPx(this, toolbar.getHeight() - marginQueryEditText)));
         } else {
             queryEditText.setTranslationY(translationY);
         }
-
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) queryEditText.getLayoutParams();
-        int width = (int) (710 - (66 * Math.max(INTERPOLATOR.getInterpolation(ratio), 0)));
-        layoutParams.width = width;
-        queryEditText.requestLayout();
     }
 
     public class TabFragmentPagerAdapter extends FragmentPagerAdapter {

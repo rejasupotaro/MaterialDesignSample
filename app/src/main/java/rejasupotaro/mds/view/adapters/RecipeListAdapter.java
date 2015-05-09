@@ -40,7 +40,7 @@ public class RecipeListAdapter extends BindableAdapter<Recipe> {
 
     @Override
     public View newView(LayoutInflater inflater, int position, ViewGroup container) {
-        View view = inflater.inflate(R.layout.list_item_recipe, container, false);
+        View view = inflater.inflate(R.layout.list_item_recipe, null, false);
         ViewHolder holder = new ViewHolder(view);
         view.setTag(holder);
         return view;

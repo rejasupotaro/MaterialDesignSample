@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppBaseTheme" parent="@style/Theme.AppCompat"></style>
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light"></style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:textColorPrimary">@color/text_color_secondary</item>
         <item name="android:windowBackground">@color/base</item>
+        <item name="android:textColorHint">@color/text_color_tertiary</item>
 
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
