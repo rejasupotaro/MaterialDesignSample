@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -48,7 +50,9 @@ public class RecipeListAdapter extends BindableAdapter<Recipe> {
     public void bindView(Recipe recipe, int position, View view) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
-        holder.recipeImageView.setImageResource(R.drawable.recipe);
+        Picasso.with(view.getContext())
+                .load(recipe.imageUrl())
+                .into(holder.recipeImageView);
         holder.userImageView.setImageResource(R.drawable.user);
         holder.userNameTextView.setText(recipe.user().name());
         holder.titleTextView.setText(recipe.title());
