@@ -2,45 +2,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <com.etsy.android.grid.StaggeredGridView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/channel_recipe_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/list_header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_list_header_height"
-        android:background="@color/primary"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:text="Prototype"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_xlarge"
-            android:textStyle="bold" />
-
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/sliding_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="48dip"
-            android:layout_gravity="bottom" />
-    </FrameLayout>
-
-    <EditText
-        android:id="@+id/query_edit_text"
-        android:layout_width="300dp"
-        android:layout_height="44dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="110dp"
-        android:hint="@string/placeholder_query_input"
-        android:background="@drawable/input"
-        android:padding="@dimen/spacing_medium" />
+        android:layout_height="match_parent"
+        app:column_count="2"
+        app:item_margin="8dp" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

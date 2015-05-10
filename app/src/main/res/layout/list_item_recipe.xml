@@ -19,11 +19,11 @@
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/user_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/spacing_large"
-            android:layout_marginTop="150dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="156dp"
             android:scaleType="centerCrop"
             app:riv_border_color="@android:color/white"
             app:riv_border_width="2dp"
@@ -37,14 +37,16 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_toEndOf="@id/user_image"
-            android:textSize="@dimen/text_size_small" />
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_xsmall" />
 
         <TextView
             android:id="@id/title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_image"
-            android:padding="@dimen/spacing_large"
+            android:padding="@dimen/spacing_medium"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold" />
     </RelativeLayout>

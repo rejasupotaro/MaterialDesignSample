@@ -44,7 +44,7 @@ public class ChannelFragment extends ScrollTabHolderFragment implements AbsListV
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_channel, null);
         ButterKnife.inject(this, view);
-        View headerView = inflater.inflate(R.layout.list_header_dummy, recipeListView, false);
+        View headerView = inflater.inflate(R.layout.list_header_channel_recipe, recipeListView, false);
         recipeListView.addHeaderView(headerView);
         return view;
     }

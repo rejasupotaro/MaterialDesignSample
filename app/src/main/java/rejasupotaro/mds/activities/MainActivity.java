@@ -1,27 +1,16 @@
 package rejasupotaro.mds.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.SparseArray;
-import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.AbsListView;
-import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.AdapterView;
 
-import com.astuetz.PagerSlidingTabStrip;
+import com.etsy.android.grid.StaggeredGridView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -29,31 +18,19 @@ import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.ChannelService;
 import rejasupotaro.mds.data.model.Channel;
-import rejasupotaro.mds.utils.DisplayUtils;
-import rejasupotaro.mds.view.fragments.ChannelFragment;
-import rejasupotaro.mds.view.fragments.ScrollTabHolderFragment;
-import rejasupotaro.mds.view.listeners.ScrollTabHolder;
+import rejasupotaro.mds.view.adapters.RecipeListAdapter;
 import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.subscriptions.Subscriptions;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.list_header)
-    View listHeader;
-    @InjectView(R.id.view_pager)
-    ViewPager viewPager;
-    @InjectView(R.id.sliding_tabs)
-    PagerSlidingTabStrip slidingTabs;
-    @InjectView(R.id.query_edit_text)
-    EditText queryEditText;
+    @InjectView(R.id.channel_recipe_list)
+    StaggeredGridView recipeListView;
 
-    private TabFragmentPagerAdapter pagerAdapter;
-    private int headerHeight;
-    private int minHeaderHeight;
-
+    private RecipeListAdapter recipeListAdapter;
     private Subscription channelsSubscription = Subscriptions.empty();
 
     @Override
@@ -94,145 +71,30 @@ public class MainActivity extends BaseActivity {
 
     private void setupViews() {
         channelsSubscription = AppObservable.bindActivity(this, new ChannelService().getList())
-                .subscribe(this::setupViewPager);
+                .subscribe(this::setupViews);
     }
 
-    private void setupViewPager(List<Channel> channels) {
-        headerHeight = getResources().getDimensionPixelSize(R.dimen.item_list_header_height);
-        int tabHeight = getResources().getDimensionPixelSize(R.dimen.view_pager_tab_height);
-        int actionBarHeight = 0;
-        TypedValue typedValue = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
-        }
-        minHeaderHeight = tabHeight + actionBarHeight;
+    private void setupViews(List<Channel> channels) {
+        LayoutInflater layoutInflater = getLayoutInflater();
 
-        pagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
-        for (int i = 0; i < channels.size(); i++) {
-            Channel channel = channels.get(i);
-            pagerAdapter.add(new Tab(channel.name(), ChannelFragment.newInstance(channel, i)));
-        }
-        pagerAdapter.setTabHolderScrollingContent(new ScrollTabHolder() {
-            @Override
-            public void adjustScroll(int scrollHeight) {
-                // do nothing
-            }
+        View header = layoutInflater.inflate(R.layout.list_header_channel_recipe, null);
+        recipeListView.addHeaderView(header);
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
-                if (viewPager.getCurrentItem() == pagePosition) {
-                    int scrollY = getScrollY(view);
-                    listHeader.setTranslationY(Math.max(-scrollY, -(headerHeight - minHeaderHeight)));
-                    updateHeader();
-                }
-            }
-        });
-        viewPager.setAdapter(pagerAdapter);
-
-        slidingTabs.setIndicatorColor(Color.WHITE);
-        slidingTabs.setViewPager(viewPager);
-        slidingTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                // do nothing
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                SparseArray<ScrollTabHolder> scrollTabHolders = pagerAdapter.getScrollTabHolders();
-                ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
-                currentHolder.adjustScroll((int) (listHeader.getHeight() + listHeader.getTranslationY()));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                // do nothing
-            }
-        });
+        recipeListAdapter = new RecipeListAdapter(this, channels.get(0).recipes());
+        recipeListView.setAdapter(recipeListAdapter);
+        recipeListView.setOnScrollListener(this);
+        recipeListView.setOnItemClickListener(this);
     }
 
-    public int getScrollY(AbsListView view) {
-        View c = view.getChildAt(0);
-        if (c == null) {
-            return 0;
-        }
-
-        int firstVisiblePosition = view.getFirstVisiblePosition();
-        int top = c.getTop();
-
-        int headerHeight = 0;
-        if (firstVisiblePosition >= 1) {
-            headerHeight = this.headerHeight;
-        }
-
-        return -top + firstVisiblePosition * c.getHeight() + headerHeight;
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
     }
 
-    private void updateHeader() {
-        int translationY = (int) listHeader.getTranslationY();
-//        float ratio = -translationY / (float) minHeaderHeight;
-
-        int marginQueryEditText = getResources().getDimensionPixelSize(R.dimen.spacing_small);
-        if ((DisplayUtils.dpToPx(this, toolbar.getHeight() - marginQueryEditText) + translationY) < 0) {
-            queryEditText.setTranslationY(0 - (DisplayUtils.dpToPx(this, toolbar.getHeight() - marginQueryEditText)));
-        } else {
-            queryEditText.setTranslationY(translationY);
-        }
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
     }
 
-    public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
-
-        private List<Tab> pages = new ArrayList<>();
-        private SparseArray<ScrollTabHolder> scrollTabHolders;
-        private ScrollTabHolder scrollTabHolder;
-
-        public TabFragmentPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-            scrollTabHolders = new SparseArray<>();
-        }
-
-        public SparseArray<ScrollTabHolder> getScrollTabHolders() {
-            return scrollTabHolders;
-        }
-
-        public void setTabHolderScrollingContent(ScrollTabHolder scrollTabHolder) {
-            this.scrollTabHolder = scrollTabHolder;
-        }
-
-        public void add(Tab tab) {
-            pages.add(tab);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            ScrollTabHolderFragment fragment = pages.get(position).fragment;
-            scrollTabHolders.put(position, fragment);
-            if (scrollTabHolder != null) {
-                fragment.setScrollTabHolder(scrollTabHolder);
-            }
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            return pages.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return pages.get(position).title;
-        }
-    }
-
-    public class Tab {
-
-        private String title;
-
-        private ChannelFragment fragment;
-
-        public Tab(String title, ChannelFragment fragment) {
-            this.title = title;
-            this.fragment = fragment;
-        }
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
     }
 }
