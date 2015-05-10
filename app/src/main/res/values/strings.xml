@@ -2,4 +2,6 @@
     <string name="app_name">MaterialDesignSample</string>
     <string name="action_settings">Settings</string>
     <string name="placeholder_query_input">What do you feel like eating?</string>
+    <string name="drawer_open">open drawer</string>
+    <string name="drawer_close">close drawer</string>
 </resources>

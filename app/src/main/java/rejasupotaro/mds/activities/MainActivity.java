@@ -1,13 +1,13 @@
 package rejasupotaro.mds.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 import com.etsy.android.grid.StaggeredGridView;
 
@@ -23,8 +23,10 @@ import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.subscriptions.Subscriptions;
 
-public class MainActivity extends BaseActivity implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener {
+public class MainActivity extends BaseActivity {
 
+    @InjectView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.channel_recipe_list)
@@ -67,6 +69,19 @@ public class MainActivity extends BaseActivity implements AbsListView.OnScrollLi
     private void setupActionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        ActionBarDrawerToggle drawerToggle  = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close);
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.syncState();
     }
 
     private void setupViews() {
@@ -82,19 +97,5 @@ public class MainActivity extends BaseActivity implements AbsListView.OnScrollLi
 
         recipeListAdapter = new RecipeListAdapter(this, channels.get(0).recipes());
         recipeListView.setAdapter(recipeListAdapter);
-        recipeListView.setOnScrollListener(this);
-        recipeListView.setOnItemClickListener(this);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
-    }
-
-    @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
     }
 }
