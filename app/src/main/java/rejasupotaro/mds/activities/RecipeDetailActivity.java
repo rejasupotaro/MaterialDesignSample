@@ -3,16 +3,18 @@ package rejasupotaro.mds.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,12 +25,15 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.model.Recipe;
+import rejasupotaro.mds.utils.DisplayUtils;
 import rejasupotaro.mds.view.components.StepListView;
 
 public class RecipeDetailActivity extends BaseActivity {
     public static final String EXTRA_RECIPE = "recipe";
     public static final String EXTRA_IMAGE = "ItemDetailActivity:image";
 
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
     @InjectView(R.id.recipe_image)
     ImageView recipeImageView;
     @InjectView(R.id.title_wrapper)
@@ -90,7 +95,39 @@ public class RecipeDetailActivity extends BaseActivity {
 
         recipe = Recipe.fromJson(getIntent().getStringExtra(EXTRA_RECIPE), Recipe.class);
 
+        setupActionBar();
         setupViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void setupActionBar() {
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) toolbar.getLayoutParams();
+        layoutParams.setMargins(0, DisplayUtils.getStatusBarHeight(this), 0, 0);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void setupViews() {
