@@ -33,10 +33,8 @@ public class RecipeDetailView extends FrameLayout {
     TextView descriptionTextView;
     @InjectView(R.id.step_list)
     StepListView stepListView;
-    @InjectView(R.id.user_image)
-    ImageView userImageView;
-    @InjectView(R.id.user_name_text)
-    TextView userNameTextView;
+    @InjectView(R.id.recipe_user)
+    RecipeUserView recipeUserView;
 
     private Callback callback = new Callback() {
         @Override
@@ -85,7 +83,6 @@ public class RecipeDetailView extends FrameLayout {
         updatedAtTextView.setText(recipe.updatedAt());
         descriptionTextView.setText(recipe.description());
         stepListView.setSteps(recipe.steps());
-        userNameTextView.setText(recipe.user().name());
-        userImageView.setImageDrawable(getResources().getDrawable(R.drawable.user));
+        recipeUserView.setUser(recipe.user());
     }
 }

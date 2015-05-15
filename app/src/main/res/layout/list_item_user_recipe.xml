@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/clickable"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_medium">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/user_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/user"
+                app:riv_oval="true" />
+
+            <TextView
+                android:id="@+id/user_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/text_color_secondary"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/recipe_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/recipe_description_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/spacing_small"
+            android:maxLines="3"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="@dimen/text_size_xsmall" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/recipe_image"
+        android:layout_width="100dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:scaleType="centerCrop" />
+</LinearLayout>
