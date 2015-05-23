@@ -4,4 +4,5 @@
     <string name="placeholder_query_input">What do you feel like eating?</string>
     <string name="drawer_open">open drawer</string>
     <string name="drawer_close">close drawer</string>
+    <string name="feeling_lucky">I\'m Feeling Lucky</string>
 </resources>
