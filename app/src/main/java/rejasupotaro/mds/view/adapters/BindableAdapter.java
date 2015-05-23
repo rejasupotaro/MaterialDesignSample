@@ -12,8 +12,13 @@ public abstract class BindableAdapter<T> extends ArrayAdapter<T> {
 
     private LayoutInflater inflater;
 
-    public BindableAdapter(Context context, List<T> episodeList) {
-        super(context, 0, episodeList);
+    public BindableAdapter(Context context) {
+        super(context, 0);
+        setup(context);
+    }
+
+    public BindableAdapter(Context context, List<T> items) {
+        super(context, 0, items);
         setup(context);
     }
 

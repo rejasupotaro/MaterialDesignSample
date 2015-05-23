@@ -19,7 +19,6 @@ import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.ChannelService;
 import rejasupotaro.mds.data.model.Channel;
 import rejasupotaro.mds.view.adapters.RecipeListAdapter;
-import rejasupotaro.mds.view.components.SearchView;
 import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.subscriptions.Subscriptions;
