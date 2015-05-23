@@ -19,6 +19,7 @@ import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.ChannelService;
 import rejasupotaro.mds.data.model.Channel;
 import rejasupotaro.mds.view.adapters.RecipeListAdapter;
+import rejasupotaro.mds.view.components.SearchView;
 import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.subscriptions.Subscriptions;
@@ -73,7 +74,7 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        ActionBarDrawerToggle drawerToggle  = new ActionBarDrawerToggle(
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
                 toolbar,
