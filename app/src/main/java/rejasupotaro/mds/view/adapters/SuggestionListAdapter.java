@@ -9,8 +9,11 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
+import rejasupotaro.mds.data.services.SuggestionService;
 
 public class SuggestionListAdapter extends BindableAdapter<String> {
+
+    private SuggestionService suggestionService = new SuggestionService();
 
     static class ViewHolder {
         @InjectView(R.id.suggestion_text)
@@ -26,7 +29,8 @@ public class SuggestionListAdapter extends BindableAdapter<String> {
     }
 
     public void append(String query) {
-        add(query);
+        clear();
+        addAll(suggestionService.get(query));
         notifyDataSetChanged();
     }
 
@@ -43,4 +47,5 @@ public class SuggestionListAdapter extends BindableAdapter<String> {
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.suggestionText.setText(item);
     }
+
 }

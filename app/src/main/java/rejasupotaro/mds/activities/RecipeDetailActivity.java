@@ -7,18 +7,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.data.model.Recipe;
+import rejasupotaro.mds.data.models.Recipe;
 import rejasupotaro.mds.utils.DisplayUtils;
 import rejasupotaro.mds.view.components.RecipeDetailView;
 

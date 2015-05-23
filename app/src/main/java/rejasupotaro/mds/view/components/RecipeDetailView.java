@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.data.model.Recipe;
+import rejasupotaro.mds.data.models.Recipe;
 
 public class RecipeDetailView extends FrameLayout {
 

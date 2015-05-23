@@ -1,9 +1,9 @@
-package rejasupotaro.mds.data;
+package rejasupotaro.mds.data.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rejasupotaro.mds.data.model.Channel;
+import rejasupotaro.mds.data.models.Channel;
 import rx.Observable;
 
 public class ChannelService {

@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.activities.RecipeDetailActivity;
-import rejasupotaro.mds.data.model.Recipe;
+import rejasupotaro.mds.data.models.Recipe;
 
 public class RecipeListAdapter extends BindableAdapter<Recipe> {
     public RecipeListAdapter(Context context, List<Recipe> recipes) {

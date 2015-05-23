@@ -1,4 +1,4 @@
-package rejasupotaro.mds.data.model;
+package rejasupotaro.mds.data.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

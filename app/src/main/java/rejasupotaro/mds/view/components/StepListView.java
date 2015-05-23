@@ -2,7 +2,6 @@ package rejasupotaro.mds.view.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -11,7 +10,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.data.model.Step;
+import rejasupotaro.mds.data.models.Step;
 
 public class StepListView extends FrameLayout {
     @InjectView(R.id.steps_container)

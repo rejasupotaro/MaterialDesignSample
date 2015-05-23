@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.data.model.Step;
+import rejasupotaro.mds.data.models.Step;
 
 public class StepView extends FrameLayout {
     @InjectView(R.id.step_description_text)
