@@ -18,7 +18,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="This is a prototype"
+            android:shadowColor="@color/black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="8"
+            android:text="sample app"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />

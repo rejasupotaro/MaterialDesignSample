@@ -1,8 +1,7 @@
 package rejasupotaro.mds.view.components;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.view.adapters.SuggestionListAdapter;
 import rejasupotaro.mds.view.adapters.TextWatcherAdapter;
@@ -23,6 +23,7 @@ import rx.android.AndroidSubscriptions;
 import rx.android.internal.Assertions;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.android.view.ViewObservable;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class SearchView extends FrameLayout implements Observable.OnSubscribe<String> {
@@ -31,6 +32,8 @@ public class SearchView extends FrameLayout implements Observable.OnSubscribe<St
 
     @InjectView(R.id.query_input)
     EditText queryInput;
+    @InjectView(R.id.clear_button)
+    View clearButton;
     @InjectView(R.id.suggestion_list)
     ListView suggestionListView;
 
@@ -85,7 +88,20 @@ public class SearchView extends FrameLayout implements Observable.OnSubscribe<St
 
     public Observable<String> observe() {
         return Observable.create(this)
+                .map(query -> {
+                    if (TextUtils.isEmpty(query)) {
+                        clearButton.setVisibility(View.GONE);
+                    } else {
+                        clearButton.setVisibility(View.VISIBLE);
+                    }
+                    return query;
+                })
                 .debounce(DEBOUNCE_WAIT, TimeUnit.MILLISECONDS, Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @OnClick(R.id.clear_button)
+    void onClearButtonClick() {
+        queryInput.setText("");
     }
 }
