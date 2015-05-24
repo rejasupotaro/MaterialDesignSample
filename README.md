@@ -1,6 +1,6 @@
 ## Screenshot
 
-![](https://raw.githubusercontent.com/rejasupotaro/MaterialDesignSample/master/images/material.gif)
+<img src="https://raw.githubusercontent.com/rejasupotaro/MaterialDesignSample/master/images/sample.gif" width="320px">
 
 ## Links
 
