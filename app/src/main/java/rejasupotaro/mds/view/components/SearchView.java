@@ -3,6 +3,7 @@ package rejasupotaro.mds.view.components;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -71,6 +72,7 @@ public class SearchView extends FrameLayout implements Observable.OnSubscribe<St
 
     @Override
     public void call(Subscriber<? super String> subscriber) {
+        Log.e("debugging", "subscriber is comming");
         Assertions.assertUiThread();
 
         final TextWatcherAdapter listener = new TextWatcherAdapter() {
@@ -80,7 +82,8 @@ public class SearchView extends FrameLayout implements Observable.OnSubscribe<St
             }
         };
 
-        final Subscription subscription = AndroidSubscriptions.unsubscribeInUiThread(() -> queryInput.removeTextChangedListener(listener));
+        final Subscription subscription = AndroidSubscriptions
+                .unsubscribeInUiThread(() -> queryInput.removeTextChangedListener(listener));
 
         queryInput.addTextChangedListener(listener);
         subscriber.add(subscription);
