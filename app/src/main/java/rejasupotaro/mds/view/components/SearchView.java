@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
@@ -61,13 +62,10 @@ public class SearchView extends FrameLayout implements Observable.OnSubscribe<St
 
         suggestionListAdapter = new SuggestionListAdapter(getContext());
         suggestionListView.setAdapter(suggestionListAdapter);
-
-        ViewObservable.bindView(this, observe())
-                .subscribe(this::updateSuggestions);
     }
 
-    private void updateSuggestions(String query) {
-        suggestionListAdapter.append(query);
+    public void updateSuggestions(List<String> suggestions) {
+        suggestionListAdapter.update(suggestions);
     }
 
     @Override

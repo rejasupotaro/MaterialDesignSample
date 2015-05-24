@@ -16,17 +16,22 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.data.services.ChannelService;
 import rejasupotaro.mds.data.models.Channel;
+import rejasupotaro.mds.data.services.ChannelService;
+import rejasupotaro.mds.data.services.SuggestionService;
 import rejasupotaro.mds.view.adapters.RecipeListAdapter;
+import rejasupotaro.mds.view.components.SearchView;
 import rx.Subscription;
 import rx.android.app.AppObservable;
+import rx.functions.Action1;
 import rx.subscriptions.Subscriptions;
 
 public class MainActivity extends BaseActivity {
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @InjectView(R.id.search_view)
+    SearchView searchView;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.channel_recipe_list)
@@ -34,6 +39,8 @@ public class MainActivity extends BaseActivity {
 
     private RecipeListAdapter recipeListAdapter;
     private Subscription channelsSubscription = Subscriptions.empty();
+    private Subscription querySubscription = Subscriptions.empty();
+    private Subscription suggestionsSubscription = Subscriptions.empty();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         channelsSubscription.unsubscribe();
+        querySubscription.unsubscribe();
+        suggestionsSubscription.unsubscribe();
         super.onDestroy();
     }
 
@@ -87,6 +96,15 @@ public class MainActivity extends BaseActivity {
     private void setupViews() {
         channelsSubscription = AppObservable.bindActivity(this, new ChannelService().getList())
                 .subscribe(this::setupViews);
+
+        querySubscription = AppObservable.bindActivity(this, searchView.observe())
+                .subscribe(this::updateSuggestions);
+    }
+
+    private void updateSuggestions(String query) {
+        suggestionsSubscription.unsubscribe();
+        suggestionsSubscription = AppObservable.bindActivity(this, new SuggestionService().get(query))
+                .subscribe(searchView::updateSuggestions);
     }
 
     private void setupViews(List<Channel> channels) {

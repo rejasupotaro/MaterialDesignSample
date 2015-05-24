@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.data.services.SuggestionService;
 
 public class SuggestionListAdapter extends BindableAdapter<String> {
-
-    private SuggestionService suggestionService = new SuggestionService();
 
     static class ViewHolder {
         @InjectView(R.id.suggestion_text)
@@ -28,9 +27,9 @@ public class SuggestionListAdapter extends BindableAdapter<String> {
         super(context);
     }
 
-    public void append(String query) {
+    public void update(List<String> suggestions) {
         clear();
-        addAll(suggestionService.get(query));
+        addAll(suggestions);
         notifyDataSetChanged();
     }
 
@@ -47,5 +46,4 @@ public class SuggestionListAdapter extends BindableAdapter<String> {
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.suggestionText.setText(item);
     }
-
 }
