@@ -45,7 +45,6 @@ public class UserProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ButterKnife.inject(this);
-
         User user = Model.fromJson(getIntent().getStringExtra(EXTRA_USER), User.class);
 
         setupActionBar();

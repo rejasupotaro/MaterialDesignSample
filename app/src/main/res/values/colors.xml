@@ -15,6 +15,7 @@
     <color name="gray">#a3a090</color>
     <color name="border">#dbdbce</color>
     <color name="transparent">#00000000</color>
+    <color name="semi_transparent">#33000000</color>
 
     <color name="base">@color/lightgray</color>
     <color name="accent">@color/orange</color>

@@ -4,9 +4,14 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="180dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/semi_transparent" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,8 +22,8 @@
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/user_image"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="@dimen/spacing_large"
             android:scaleType="centerCrop"
             android:src="@drawable/user"
