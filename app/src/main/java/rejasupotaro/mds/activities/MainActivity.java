@@ -21,6 +21,7 @@ import rejasupotaro.mds.data.models.Channel;
 import rejasupotaro.mds.data.services.ChannelService;
 import rejasupotaro.mds.data.services.SuggestionService;
 import rejasupotaro.mds.view.adapters.RecipeListAdapter;
+import rejasupotaro.mds.view.components.DrawerHeaderView;
 import rejasupotaro.mds.view.components.SearchView;
 import rx.Subscription;
 import rx.android.app.AppObservable;
@@ -96,9 +97,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupViews() {
+        navigationView.addHeaderView(new DrawerHeaderView(this));
+
         channelsSubscription = AppObservable.bindActivity(this, new ChannelService().getList())
                 .subscribe(this::setupViews);
-
         querySubscription = AppObservable.bindActivity(this, searchView.observe())
                 .subscribe(this::updateSuggestions);
     }
