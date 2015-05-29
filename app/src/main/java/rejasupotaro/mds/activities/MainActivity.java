@@ -1,6 +1,7 @@
 package rejasupotaro.mds.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +30,8 @@ public class MainActivity extends BaseActivity {
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @InjectView(R.id.navigation_view)
+    NavigationView navigationView;
     @InjectView(R.id.search_view)
     SearchView searchView;
     @InjectView(R.id.toolbar)
