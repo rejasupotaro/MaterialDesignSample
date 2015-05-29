@@ -23,7 +23,6 @@ import rejasupotaro.mds.view.adapters.RecipeListAdapter;
 import rejasupotaro.mds.view.components.SearchView;
 import rx.Subscription;
 import rx.android.app.AppObservable;
-import rx.functions.Action1;
 import rx.subscriptions.Subscriptions;
 
 public class MainActivity extends BaseActivity {
