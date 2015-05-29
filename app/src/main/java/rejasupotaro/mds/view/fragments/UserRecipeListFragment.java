@@ -15,6 +15,7 @@ import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Recipe;
 import rejasupotaro.mds.view.adapters.UserRecipeListAdapter;
+import rejasupotaro.mds.view.components.DividerItemDecoration;
 
 public class UserRecipeListFragment extends Fragment {
 
@@ -50,6 +51,7 @@ public class UserRecipeListFragment extends Fragment {
         if (getActivity() instanceof ObservableScrollViewCallbacks) {
             userRecipeListView.setScrollViewCallbacks((ObservableScrollViewCallbacks) getActivity());
         }
+        userRecipeListView.addItemDecoration(new DividerItemDecoration(getActivity()));
         userRecipeListView.setAdapter(userRecipeListAdapter);
     }
 }
