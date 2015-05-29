@@ -1,6 +1,8 @@
 ## Screenshot
 
-<img src="https://raw.githubusercontent.com/rejasupotaro/MaterialDesignSample/master/images/sample.gif" width="320px">
+<img src="https://raw.githubusercontent.com/rejasupotaro/MaterialDesignSample/master/images/image.png">
+
+<img src="https://raw.githubusercontent.com/rejasupotaro/MaterialDesignSample/master/images/anim.gif" width="320px">
 
 ## Links
 
