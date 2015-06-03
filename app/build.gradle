@@ -47,7 +47,6 @@ dependencies {
 
     compile 'com.google.dagger:dagger:2.0'
     compile 'com.jakewharton:butterknife:6.1.0'
-    compile 'com.github.ksoichiro:android-observablescrollview:1.5.1'
     compile 'com.facebook.stetho:stetho:1.1.1'
     compile 'com.makeramen:roundedimageview:2.0.1'
     compile 'com.google.auto.value:auto-value:1.0-rc1'

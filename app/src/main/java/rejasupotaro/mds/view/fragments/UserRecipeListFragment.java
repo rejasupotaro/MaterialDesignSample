@@ -3,12 +3,10 @@ package rejasupotaro.mds.view.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -20,7 +18,7 @@ import rejasupotaro.mds.view.components.DividerItemDecoration;
 public class UserRecipeListFragment extends Fragment {
 
     @InjectView(R.id.scroll)
-    ObservableRecyclerView userRecipeListView;
+    RecyclerView userRecipeListView;
 
     private UserRecipeListAdapter userRecipeListAdapter;
 
@@ -46,11 +44,7 @@ public class UserRecipeListFragment extends Fragment {
     private void setupViews() {
         userRecipeListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         userRecipeListView.setHasFixedSize(false);
-        userRecipeListView.setTouchInterceptionViewGroup((ViewGroup) getActivity().findViewById(R.id.container));
         userRecipeListAdapter = new UserRecipeListAdapter(Recipe.dummies());
-        if (getActivity() instanceof ObservableScrollViewCallbacks) {
-            userRecipeListView.setScrollViewCallbacks((ObservableScrollViewCallbacks) getActivity());
-        }
         userRecipeListView.addItemDecoration(new DividerItemDecoration(getActivity()));
         userRecipeListView.setAdapter(userRecipeListAdapter);
     }
