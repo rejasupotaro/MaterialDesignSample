@@ -1,0 +1,6 @@
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="270"
+    android:fromXDelta="100%p"
+    android:interpolator="@android:interpolator/accelerate_decelerate"
+    android:toXDelta="0"
+    />

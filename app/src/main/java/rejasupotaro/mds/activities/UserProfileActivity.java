@@ -1,6 +1,6 @@
 package rejasupotaro.mds.activities;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -19,6 +19,7 @@ import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Model;
 import rejasupotaro.mds.data.models.User;
+import rejasupotaro.mds.view.Transition;
 import rejasupotaro.mds.view.components.UserProfileHeaderView;
 import rejasupotaro.mds.view.fragments.UserRecipeListFragment;
 
@@ -34,10 +35,18 @@ public class UserProfileActivity extends BaseActivity {
     @InjectView(R.id.pager_tabs)
     TabLayout tabLayout;
 
-    public static void launch(Context context, User user) {
-        Intent intent = new Intent(context, UserProfileActivity.class);
+    public static void launch(Activity activity, User user, Transition transition) {
+        Intent intent = new Intent(activity, UserProfileActivity.class);
         intent.putExtra(EXTRA_USER, user.toJson());
-        context.startActivity(intent);
+        Transition.putTransition(intent, transition);
+        activity.startActivity(intent);
+        transition.overrideOpenTransition(activity);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        Transition.getTransition(getIntent()).overrideCloseTransition(this);
     }
 
     @Override
