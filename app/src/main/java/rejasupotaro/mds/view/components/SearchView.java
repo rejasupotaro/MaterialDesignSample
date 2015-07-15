@@ -12,8 +12,8 @@ import android.widget.ListView;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.view.adapters.SuggestionListAdapter;
@@ -24,19 +24,17 @@ import rx.Subscription;
 import rx.android.AndroidSubscriptions;
 import rx.android.internal.Assertions;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.android.view.ViewObservable;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class SearchView extends FrameLayout implements Observable.OnSubscribe<String> {
 
     private static final int DEBOUNCE_WAIT = 300;
 
-    @InjectView(R.id.query_input)
+    @Bind(R.id.query_input)
     EditText queryInput;
-    @InjectView(R.id.clear_button)
+    @Bind(R.id.clear_button)
     View clearButton;
-    @InjectView(R.id.suggestion_list)
+    @Bind(R.id.suggestion_list)
     ListView suggestionListView;
 
     private SuggestionListAdapter suggestionListAdapter;
@@ -58,7 +56,7 @@ public class SearchView extends FrameLayout implements Observable.OnSubscribe<St
 
     private void setup() {
         View.inflate(getContext(), R.layout.view_search, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         suggestionListAdapter = new SuggestionListAdapter(getContext());
         suggestionListView.setAdapter(suggestionListAdapter);

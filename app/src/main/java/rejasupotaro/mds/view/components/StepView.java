@@ -9,15 +9,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Step;
 
 public class StepView extends FrameLayout {
-    @InjectView(R.id.step_description_text)
+    @Bind(R.id.step_description_text)
     TextView stepDescriptionTextView;
-    @InjectView(R.id.step_image)
+    @Bind(R.id.step_image)
     ImageView stepImageView;
 
     public StepView(Context context, Step step) {
@@ -27,7 +27,7 @@ public class StepView extends FrameLayout {
 
     private void setup(Step step) {
         inflate(getContext(), R.layout.view_step, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         stepDescriptionTextView.setText(step.description());
         if (!TextUtils.isEmpty(step.imageUrl())) {

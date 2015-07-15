@@ -8,18 +8,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 
 public class SuggestionListAdapter extends BindableAdapter<String> {
 
     static class ViewHolder {
-        @InjectView(R.id.suggestion_text)
+        @Bind(R.id.suggestion_text)
         TextView suggestionText;
 
         ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 

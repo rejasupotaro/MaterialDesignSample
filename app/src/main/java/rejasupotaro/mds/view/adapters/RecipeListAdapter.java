@@ -12,8 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.activities.RecipeDetailActivity;
 import rejasupotaro.mds.data.models.Recipe;
@@ -24,17 +24,17 @@ public class RecipeListAdapter extends BindableAdapter<Recipe> {
     }
 
     static class ViewHolder {
-        @InjectView(R.id.recipe_image)
+        @Bind(R.id.recipe_image)
         ImageView recipeImageView;
-        @InjectView(R.id.user_image)
+        @Bind(R.id.user_image)
         ImageView userImageView;
-        @InjectView(R.id.user_name_text)
+        @Bind(R.id.user_name_text)
         TextView userNameTextView;
-        @InjectView(R.id.title_text)
+        @Bind(R.id.title_text)
         TextView titleTextView;
 
         ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 

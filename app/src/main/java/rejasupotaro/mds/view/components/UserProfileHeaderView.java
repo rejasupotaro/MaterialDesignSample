@@ -6,16 +6,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.User;
 
 public class UserProfileHeaderView extends FrameLayout {
 
-    @InjectView(R.id.user_image)
+    @Bind(R.id.user_image)
     ImageView userImageView;
-    @InjectView(R.id.user_name_text)
+    @Bind(R.id.user_name_text)
     TextView userNameTextView;
 
     public UserProfileHeaderView(Context context) {
@@ -35,7 +35,7 @@ public class UserProfileHeaderView extends FrameLayout {
 
     private void setup() {
         inflate(getContext(), R.layout.view_user_profile_header, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setUser(User user) {

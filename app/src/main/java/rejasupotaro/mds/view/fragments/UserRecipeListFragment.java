@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Recipe;
 import rejasupotaro.mds.view.adapters.UserRecipeListAdapter;
@@ -17,7 +17,7 @@ import rejasupotaro.mds.view.components.DividerItemDecoration;
 
 public class UserRecipeListFragment extends Fragment {
 
-    @InjectView(R.id.scroll)
+    @Bind(R.id.scroll)
     RecyclerView userRecipeListView;
 
     private UserRecipeListAdapter userRecipeListAdapter;
@@ -30,14 +30,14 @@ public class UserRecipeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_recipe_list, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         setupViews();
         return view;
     }
 
     @Override
     public void onDestroyView() {
-        ButterKnife.reset(this);
+        ButterKnife.unbind(this);
         super.onDestroyView();
     }
 

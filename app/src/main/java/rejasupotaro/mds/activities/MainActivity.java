@@ -14,8 +14,8 @@ import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Channel;
 import rejasupotaro.mds.data.services.ChannelService;
@@ -29,15 +29,15 @@ import rx.subscriptions.Subscriptions;
 
 public class MainActivity extends BaseActivity {
 
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @InjectView(R.id.navigation_view)
+    @Bind(R.id.navigation_view)
     NavigationView navigationView;
-    @InjectView(R.id.search_view)
+    @Bind(R.id.search_view)
     SearchView searchView;
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.channel_recipe_list)
+    @Bind(R.id.channel_recipe_list)
     StaggeredGridView recipeListView;
 
     private RecipeListAdapter recipeListAdapter;
@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setupActionBar();
         setupViews();
     }

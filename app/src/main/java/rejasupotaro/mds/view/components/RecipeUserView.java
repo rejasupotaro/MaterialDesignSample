@@ -7,8 +7,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.activities.UserProfileActivity;
 import rejasupotaro.mds.data.models.User;
@@ -16,9 +16,9 @@ import rejasupotaro.mds.view.Transition;
 
 public class RecipeUserView extends FrameLayout {
 
-    @InjectView(R.id.user_image)
+    @Bind(R.id.user_image)
     ImageView userImageView;
-    @InjectView(R.id.user_name_text)
+    @Bind(R.id.user_name_text)
     TextView userNameTextView;
 
     public RecipeUserView(Context context) {
@@ -38,7 +38,7 @@ public class RecipeUserView extends FrameLayout {
 
     private void setup() {
         inflate(getContext(), R.layout.view_recipe_user, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setUser(User user) {

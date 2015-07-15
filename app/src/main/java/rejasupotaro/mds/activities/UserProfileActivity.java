@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Model;
 import rejasupotaro.mds.data.models.User;
@@ -26,13 +26,13 @@ import rejasupotaro.mds.view.fragments.UserRecipeListFragment;
 public class UserProfileActivity extends BaseActivity {
     private static final String EXTRA_USER = "user";
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.user_profile_header)
+    @Bind(R.id.user_profile_header)
     UserProfileHeaderView userProfileHeaderView;
-    @InjectView(R.id.view_pager)
+    @Bind(R.id.view_pager)
     ViewPager viewPager;
-    @InjectView(R.id.pager_tabs)
+    @Bind(R.id.pager_tabs)
     TabLayout tabLayout;
 
     public static void launch(Activity activity, User user, Transition transition) {
@@ -53,7 +53,7 @@ public class UserProfileActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         User user = Model.fromJson(getIntent().getStringExtra(EXTRA_USER), User.class);
 
         setupActionBar();

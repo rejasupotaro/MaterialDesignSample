@@ -11,8 +11,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Recipe;
 
@@ -41,15 +41,15 @@ public class UserRecipeListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.user_image)
+        @Bind(R.id.user_image)
         ImageView userImageView;
-        @InjectView(R.id.user_name_text)
+        @Bind(R.id.user_name_text)
         TextView userNameTextView;
-        @InjectView(R.id.recipe_image)
+        @Bind(R.id.recipe_image)
         ImageView recipeImageView;
-        @InjectView(R.id.recipe_title_text)
+        @Bind(R.id.recipe_title_text)
         TextView recipeTitleTextView;
-        @InjectView(R.id.recipe_description_text)
+        @Bind(R.id.recipe_description_text)
         TextView recipeDescriptionTextView;
 
         public static ItemViewHolder create(ViewGroup parent) {
@@ -59,7 +59,7 @@ public class UserRecipeListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind(Recipe recipe) {

@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Recipe;
 import rejasupotaro.mds.utils.DisplayUtils;
@@ -23,9 +23,9 @@ public class RecipeDetailActivity extends BaseActivity {
     public static final String EXTRA_RECIPE = "recipe";
     public static final String EXTRA_IMAGE = "ItemDetailActivity:image";
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.recipe_detail)
+    @Bind(R.id.recipe_detail)
     RecipeDetailView recipeDetailView;
 
     private Recipe recipe;
@@ -46,7 +46,7 @@ public class RecipeDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         ImageView recipeImageView = (ImageView) recipeDetailView.findViewById(R.id.recipe_image);
         ViewCompat.setTransitionName(recipeImageView, EXTRA_IMAGE);

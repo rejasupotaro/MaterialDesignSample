@@ -14,26 +14,26 @@ import android.widget.TextView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Recipe;
 
 public class RecipeDetailView extends FrameLayout {
 
-    @InjectView(R.id.recipe_image)
+    @Bind(R.id.recipe_image)
     ImageView recipeImageView;
-    @InjectView(R.id.title_wrapper)
+    @Bind(R.id.title_wrapper)
     View titleWrapperView;
-    @InjectView(R.id.title_text)
+    @Bind(R.id.title_text)
     TextView titleTextView;
-    @InjectView(R.id.updated_at_text)
+    @Bind(R.id.updated_at_text)
     TextView updatedAtTextView;
-    @InjectView(R.id.description_text)
+    @Bind(R.id.description_text)
     TextView descriptionTextView;
-    @InjectView(R.id.step_list)
+    @Bind(R.id.step_list)
     StepListView stepListView;
-    @InjectView(R.id.recipe_user)
+    @Bind(R.id.recipe_user)
     RecipeUserView recipeUserView;
 
     private Callback callback = new Callback() {
@@ -69,7 +69,7 @@ public class RecipeDetailView extends FrameLayout {
 
     private void setup() {
         inflate(getContext(), R.layout.view_recipe_detail, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setRecipe(Recipe recipe) {

@@ -7,13 +7,13 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import rejasupotaro.mds.R;
 import rejasupotaro.mds.data.models.Step;
 
 public class StepListView extends FrameLayout {
-    @InjectView(R.id.steps_container)
+    @Bind(R.id.steps_container)
     LinearLayout stepsContainer;
 
     public StepListView(Context context) {
@@ -33,7 +33,7 @@ public class StepListView extends FrameLayout {
 
     private void setup() {
         inflate(getContext(), R.layout.view_step_list, this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     public void setSteps(List<Step> steps) {
