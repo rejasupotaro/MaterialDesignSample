@@ -13,4 +13,4 @@
 - [Toolbar | Android Developers](https://developer.android.com/reference/android/widget/Toolbar.html)
 - [Android Support Library 22.1 - ActionBarActivity is dead, long live…](https://plus.google.com/+AndroidDevelopers/posts/LNyDnnBYJ8r)
  - [AppBarLayout | Android Developers](https://developer.android.com/reference/android/support/design/widget/AppBarLayout.html)
-- [etsy/AndroidStaggeredGrid](https://github.com/etsy/AndroidStaggeredGrid)
+- [android - Flinging with RecyclerView + AppBarLayout - Stack Overflow](http://stackoverflow.com/questions/30923889/flinging-with-recyclerview-appbarlayout)
