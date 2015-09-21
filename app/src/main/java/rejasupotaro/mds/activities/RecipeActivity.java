@@ -19,7 +19,7 @@ import rejasupotaro.mds.data.models.Recipe;
 import rejasupotaro.mds.utils.DisplayUtils;
 import rejasupotaro.mds.view.components.RecipeDetailView;
 
-public class RecipeDetailActivity extends BaseActivity {
+public class RecipeActivity extends BaseActivity {
     public static final String EXTRA_RECIPE = "recipe";
     public static final String EXTRA_IMAGE = "ItemDetailActivity:image";
 
@@ -36,7 +36,7 @@ public class RecipeDetailActivity extends BaseActivity {
                 transitionView,
                 EXTRA_IMAGE);
 
-        Intent intent = new Intent(activity, RecipeDetailActivity.class);
+        Intent intent = new Intent(activity, RecipeActivity.class);
         intent.putExtra(EXTRA_RECIPE, recipe.toJson());
         intent.putExtra(EXTRA_IMAGE, url);
         ActivityCompat.startActivity(activity, intent, options.toBundle());

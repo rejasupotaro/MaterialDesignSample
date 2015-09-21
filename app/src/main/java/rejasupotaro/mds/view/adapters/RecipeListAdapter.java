@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rejasupotaro.mds.R;
-import rejasupotaro.mds.activities.RecipeDetailActivity;
+import rejasupotaro.mds.activities.RecipeActivity;
 import rejasupotaro.mds.data.models.Recipe;
 
 public class RecipeListAdapter extends BindableAdapter<Recipe> {
@@ -59,7 +59,7 @@ public class RecipeListAdapter extends BindableAdapter<Recipe> {
 
         view.setOnClickListener(v -> {
             Activity activity = (Activity) v.getContext();
-            RecipeDetailActivity.launch(activity, recipe, holder.recipeImageView, "");
+            RecipeActivity.launch(activity, recipe, holder.recipeImageView, "");
         });
     }
 }
