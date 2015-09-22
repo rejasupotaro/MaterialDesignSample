@@ -71,7 +71,6 @@ public class UserProfileActivity extends BaseActivity {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(UserRecipeListFragment.newInstance(), "Tab 1");
         pagerAdapter.addFragment(UserRecipeListFragment.newInstance(), "Tab 2");
-        pagerAdapter.addFragment(UserRecipeListFragment.newInstance(), "Tab 3");
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
