@@ -12,13 +12,13 @@ import java.util.List;
 public abstract class Step extends Model {
     public static final Step dummy0 = new AutoValue_Step(
             "Prepare the toppings by shredding up the lettuce, cutting avocado into small chunks and chopping the tomato.",
-            "http://upload.wikimedia.org/wikipedia/commons/c/cb/Banana_flamb%C3%A9_-_by_Jenene.jpg");
+            "https://img-global.cpcdn.com/001_steps/2432172_314de48ebcced475/320x320sq70/photo.jpg");
     public static final Step dummy1 = new AutoValue_Step(
             "While the tortillas are warming, heat 1 Tbsp oil in a skillet and cook the onions and garlic until onions are soft and translucent. Add chicken and green bell peppers and continue cooking until chicken has changed color.",
-            "http://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Recette_pate_brisee_etape_5.jpg/640px-Recette_pate_brisee_etape_5.jpg");
+            "https://img-global.cpcdn.com/001_steps/2432172_301d216f7ee3a696/320x320sq70/photo.jpg");
     public static final Step dummy2 = new AutoValue_Step(
             "Let everyone add filling and toppings to their soft shells, fold in half and dig in!",
-            "");
+            "https://img-global.cpcdn.com/001_steps/2432172_8aed8f44ef810f22/320x320sq70/photo.jpg");
 
     @JsonProperty("description")
     public abstract String description();
